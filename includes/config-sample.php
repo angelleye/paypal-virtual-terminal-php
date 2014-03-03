@@ -12,7 +12,7 @@ date_default_timezone_set('America/Chicago');
  * both your test server (sandbox) and live server values setup here.
  */
 $sandbox = TRUE;
-$domain = $sandbox ? 'http://sandbox.domain.com/paypal/pos/' : 'http://www.domain.com/paypal/pos/';
+$domain = $sandbox ? 'http://sandbox.domain.com/paypal-pos/' : 'http://www.domain.com/paypal-pos/';
 
 /**
  * API Credentials
