@@ -8,6 +8,7 @@ $paypal = new PayPal($paypal_config);
 
 ############[ SESSIONS ]################
 $_SESSION['invoice'] = isset($_POST['InvoiceID']) ? $_POST['InvoiceID'] : '';
+$_SESSION['transaction_type'] = isset($_POST['TransactionType']) ? $_POST['TransactionType'] : 'Authorization';
 
 $_SESSION['cc_type'] = $_POST['CreditCardType'];
 $_SESSION['cc_number'] = $_POST['CreditCardNumber'];
@@ -84,7 +85,7 @@ $_SESSION['shippingInfo'] = isset($_POST['shippingInfo']) ? $_POST['shippingInfo
 
 // Create new PayPal object
 $DPFields = array(
-					'paymentaction' => 'Sale', 						// How you want to obtain payment.  Authorization indidicates the payment is a basic auth subject to settlement with Auth & Capture.  Sale indicates that this is a final sale for which you are requesting payment.  Default is Sale.
+					'paymentaction' => $_SESSION['transaction_type'], 						// How you want to obtain payment.  Authorization indidicates the payment is a basic auth subject to settlement with Auth & Capture.  Sale indicates that this is a final sale for which you are requesting payment.  Default is Sale.
 					'ipaddress' => $_SERVER['REMOTE_ADDR'], 		// Required.  IP address of the payer's browser.
 					'returnfmfdetails' => '1' 						// Flag to determine whether you want the results returned by FMF.  1 or 0.  Default is 0.
 				);
