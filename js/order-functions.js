@@ -1,4 +1,0 @@
-// JavaScript Document
-function updateSalesTax() {
-		
-}

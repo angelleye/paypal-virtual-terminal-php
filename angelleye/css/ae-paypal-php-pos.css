@@ -1,0 +1,61 @@
+/** Custom Angelleye CSS for PayPal PHP Virtual Terminal POS **/
+
+.navbar-static-top {
+    background: #009cde;
+}
+
+.text-secondary {
+    color:#003087;
+}
+
+.navbar-toggle {
+    background:#F8F8F8;
+}
+
+.navbar-brand {
+    color:#FFF!important;
+}
+
+#ae-paypal-pos-form {
+    margin-bottom:60px;
+}
+
+.angelleye-nom-nop {
+    margin:0px;
+    padding:0px;
+}
+
+.anglleye-cleared {
+    clear: both !important;
+}
+
+#pos-panel-submit button {
+    width:100%;
+    font-size: 1.20em;
+    text-transform: uppercase;
+}
+
+#pos-panel-reset {
+    padding-top:20px;
+}
+
+#GrandTotalDisplay,
+#TaxAmountDisplay {
+    width:100px;
+    border-bottom:1px solid #CCC;
+    padding-top:8px;
+}
+
+.form-control-feedback {
+    display: none!important;
+}
+/* Bigger than 950 */
+@media (min-width: 950px) {
+    .form-control-feedback {
+        display: block!important;
+    }
+    #DivTaxRate .form-control-feedback {
+        right: -16px;
+        display: block!important;
+    }
+}
