@@ -7,11 +7,11 @@
  * Include PayPal config file
  */
 require_once('config.php');
-require_once('paypal.class.php');
+require_once('../../vendor/autoload.php');
 
 // PayPal object
 $paypal_config = array('Sandbox' => $config['Sandbox'], 'APIUsername' => $config['APIUsername'], 'APIPassword' => $config['APIPassword'], 'APISignature' => $config['APISignature']);
-$paypal = new PayPal($paypal_config);
+$paypal = new \angelleye\PayPal\PayPal($paypal_config);
 
 ############[ SESSIONS ]################
 $_SESSION['invoice'] = isset($_POST['InvoiceID']) ? $_POST['InvoiceID'] : '';
