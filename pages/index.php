@@ -2,7 +2,7 @@
 /**
  * Include PayPal config file
  */
-require_once('../angelleye/paypal/config.php');
+require_once('../includes/config.php');
 
 ?>
 <!DOCTYPE html>
