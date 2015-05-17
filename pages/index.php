@@ -34,7 +34,7 @@ require_once('../angelleye/paypal/config.php');
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="../angelleye/css/ae-paypal-php-pos.css" rel="stylesheet" type="text/css">
+    <link href="../css/ae-paypal-php-pos.css" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
