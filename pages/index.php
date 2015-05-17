@@ -1219,7 +1219,7 @@ require_once('../includes/config.php');
     <script src="../dist/js/sb-admin-2.js"></script>
 
     <!-- Custom JavaScript -->
-    <script src="../js/ae-paypal-php-pos-scripts.js"></script>
+    <script src="../js/pos-functions.js"></script>
 
     <!-- Validate Credit Card Number JavaScript -->
     <script src="../js/validate-credit-card-number.js"></script>
