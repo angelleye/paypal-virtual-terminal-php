@@ -90,24 +90,66 @@ $(function() {
             updateGrandTotal();
         });
 
+        /* Swipe field */
+        $('#swiper').change(function(){
+            ParseStripeData();
+        });
+
+        $('#swiper').focus(function(){
+            ClearStripeData();
+        });
+
+        $('#swiper').blur(function(){
+            BlurStripeField();
+        });
+
         /* Toggle Issue Number on Credit Card Type change */
         $('#CreditCardType').change(function(){
             ToggleIssueNumber();
         });
 
-        /* Validate Credit Card Number */
-        $('#CreditCardNumber').change(function(){
-            //ValidateCreditCardNumber();
-        });
-
-        // Submit offer form
-        /*$('#ae-paypal-pos-form').submit(function() {
-            alert('submit');
-            return false;
-        });*/
-
     });
 });
+
+function DisableEnterKey(e)
+{
+    var key;
+    if(window.event)
+        key = window.event.keyCode; //IE
+    else
+        key = e.which; //firefox
+
+    return (key != 13);
+}
+
+function checkItem(e)
+{
+    if (window.event)
+    {
+        if (event.keyCode==13) //trap enter
+        {
+            //if not textarea type
+            if(document.activeElement.type!='textarea')
+            {
+                event.keyCode=9;
+            } //convert to Tab key
+        }
+        return event.keyCode;
+    }
+
+    if (e.keyCode)
+        code = e.keyCode;
+    else if (e.which)
+        code = e.which;
+
+    if (code==13)
+    {
+        document.getElementById('CreditCardSecurityCode').focus();
+        return false;
+    }
+}
+
+document.onkeydown=checkItem;
 
 /* Validate Credit Card Number field */
 function ValidateCreditCardNumber()
@@ -117,10 +159,21 @@ function ValidateCreditCardNumber()
     return (checkCreditCard(CardNo,CardType)) ? true : false;
 }
 
+/* Clear data from card stripe swiped */
+function ClearStripeData() {
+    var TrackData = $('#swiper');
+    TrackData.val('');
+}
+
+/* Blur swipe field */
+function BlurStripeField() {
+    ClearStripeData();
+    $('#CreditCardSecurityCode').focus();
+}
+
 /* Parse data from card stripe swiped */
-function ParseStripeData()
-{
-    var TrackData = $('%CreditCardStripe').val();
+function ParseStripeData() {
+    var TrackData = $('#swiper').val();
     var p = new SwipeParserObj(TrackData);
 
     if(p.hasTrack1)
@@ -157,7 +210,6 @@ function ParseStripeData()
     }
 
     ToggleIssueNumber();
-    ToggleSecurityCode();
 }
 
 /* Toggle Issue Number */
@@ -174,19 +226,7 @@ function ToggleIssueNumber()
         $('#DivCreditCardIssueNumber').hide();
         $('#CreditCardIssueNumber').removeAttr('required');
     }
-}
-
-/* Toggle Security Code */
-function ToggleSecurityCode()
-{
-    if($('#CreditCardSecurityCodeIndicator').val() == 1)
-    {
-        $('#DivCreditCardSecurityCode').show();
-    }
-    else
-    {
-        $('#DivCreditCardSecurityCode').hide();
-    }
+    return false;
 }
 
 /* Update Sales Tax */
