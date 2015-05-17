@@ -127,100 +127,6 @@ require_once('../includes/config.php');
                             <div class="row">
                                 <div class="col-lg-12">
 
-                                    <!-- Payment Info -->
-                                    <div class="panel panel-default" id="pos-panel-payment-info">
-                                        <div class="panel-heading text-uppercase">Payment Info</div>
-                                        <div class="panel-body">
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="TransactionType">Transaction Type</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <select class="form-control" name="TransactionType" id="TransactionType" required="required">
-                                                        <option value="Authorization">Auth</option>
-                                                        <option value="Sale" selected="selected">Sale</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="NetAmount">Net Order Amount</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
-                                                        <input type="text" class="form-control" name="NetAmount" id="NetAmount" required="required" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="ShippingAmount">Shipping Amount</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
-                                                        <input type="text" class="form-control" name="ShippingAmount" id="ShippingAmount" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="HandlingAmount">Handling Amount</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
-                                                        <input type="text" class="form-control" name="HandlingAmount" id="HandlingAmount" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group" id="DivTaxRate">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="TaxRate">Tax Rate</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" name="TaxRate" id="TaxRate" maxlength="4" />
-                                                        <div class="input-group-addon">%</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="TaxAmount">Tax Amount</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <div id="TaxAmountDisplay" class="form-control-static"><strong>0.00</strong></div>
-                                                    <input type="hidden" name="TaxAmount" id="TaxAmount" value="0" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="GrandTotal">Grand Total</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <div id="GrandTotalDisplay" class="form-control-static"><strong>0.00</strong></div>
-                                                    <input type="hidden" name="GrandTotal" id="GrandTotal" value="0" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="InvoiceID">Invoice Number</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <input type="text" class="form-control" name="InvoiceID" id="InvoiceID" maxlength="35" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="ItemName">ItemName</label>
-                                                <div class="col-lg-3 col-sm-8">
-                                                    <input type="text" class="form-control" name="ItemName" id="ItemName" maxlength="70" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="Notes">Notes</label>
-                                                <div class="col-lg-6 col-sm-8">
-                                                    <textarea class="form-control" name="Notes" id="Notes"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-
                                     <!-- Swipe Card -->
                                     <div class="panel panel-default" id="pos-panel-swipe">
                                         <div class="panel-heading text-uppercase">Swipe Card</div>
@@ -327,6 +233,100 @@ require_once('../includes/config.php');
                                                 <label class="col-lg-3 col-sm-4 control-label" for="CreditCardSecurityCode">Security Code</label>
                                                 <div class="col-lg-2 col-sm-3">
                                                     <input type="text" class="form-control" name="CreditCardSecurityCode" id="CreditCardSecurityCode" maxlength="5" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Payment Info -->
+                                    <div class="panel panel-default" id="pos-panel-payment-info">
+                                        <div class="panel-heading text-uppercase">Payment Info</div>
+                                        <div class="panel-body">
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="TransactionType">Transaction Type</label>
+                                                <div class="col-lg-3 col-sm-4">
+                                                    <select class="form-control" name="TransactionType" id="TransactionType" required="required">
+                                                        <option value="Authorization">Auth</option>
+                                                        <option value="Sale" selected="selected">Sale</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="NetAmount">Net Order Amount</label>
+                                                <div class="col-lg-3 col-sm-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
+                                                        <input type="text" class="form-control" name="NetAmount" id="NetAmount" required="required" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="ShippingAmount">Shipping Amount</label>
+                                                <div class="col-lg-3 col-sm-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
+                                                        <input type="text" class="form-control" name="ShippingAmount" id="ShippingAmount" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="HandlingAmount">Handling Amount</label>
+                                                <div class="col-lg-3 col-sm-4">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
+                                                        <input type="text" class="form-control" name="HandlingAmount" id="HandlingAmount" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="DivTaxRate">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="TaxRate">Tax Rate</label>
+                                                <div class="col-lg-3 col-sm-4">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="TaxRate" id="TaxRate" maxlength="4" />
+                                                        <div class="input-group-addon">%</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="TaxAmount">Tax Amount</label>
+                                                <div class="col-lg-3 col-sm-4">
+                                                    <div id="TaxAmountDisplay" class="form-control-static"><strong>0.00</strong></div>
+                                                    <input type="hidden" name="TaxAmount" id="TaxAmount" value="0" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="GrandTotal">Grand Total</label>
+                                                <div class="col-lg-3 col-sm-4">
+                                                    <div id="GrandTotalDisplay" class="form-control-static"><strong>0.00</strong></div>
+                                                    <input type="hidden" name="GrandTotal" id="GrandTotal" value="0" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="InvoiceID">Invoice Number</label>
+                                                <div class="col-lg-3 col-sm-4">
+                                                    <input type="text" class="form-control" name="InvoiceID" id="InvoiceID" maxlength="35" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="ItemName">ItemName</label>
+                                                <div class="col-lg-3 col-sm-8">
+                                                    <input type="text" class="form-control" name="ItemName" id="ItemName" maxlength="70" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="Notes">Notes</label>
+                                                <div class="col-lg-6 col-sm-8">
+                                                    <textarea class="form-control" name="Notes" id="Notes"></textarea>
                                                 </div>
                                             </div>
                                         </div>
