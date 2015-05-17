@@ -46,7 +46,7 @@ require_once('../angelleye/paypal/config.php');
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" type="image/x-icon" href="../angelleye/images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
 
 </head>
 
