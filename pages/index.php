@@ -134,7 +134,7 @@ require_once('../includes/config.php');
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="swiper">Click to Swipe</label>
                                                 <div class="col-lg-6 col-sm-7">
-                                                    <input type="password" class="form-control" name="swiper" id="swiper" onchange="ParseStripeData();" onblur="ClearStripeData();" onfocus="ClearStripeData()">
+                                                    <input type="password" class="form-control" name="swiper" id="swiper">
                                                     <p class="help-block"><em>Note: A USB credit card reader is required</em></p>
                                                 </div>
                                             </div>
