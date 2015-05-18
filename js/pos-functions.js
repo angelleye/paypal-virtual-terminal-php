@@ -125,10 +125,6 @@ $(function() {
             return false;
         });
 
-        $('#pos-submit-btn').click(function(){
-
-        });
-
     });
 });
 
