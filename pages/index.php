@@ -56,7 +56,7 @@ require_once('../includes/config.php');
     <div id="posInstructionsModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Content will be loaded here from "remote.php" file -->
+                <!-- Content will be loaded here from file -->
             </div>
         </div>
     </div>
@@ -64,18 +64,16 @@ require_once('../includes/config.php');
     <!-- Modal HTML -->
     <div id="posResetConfirmModal" class="modal fade">
         <div class="modal-dialog">
-        <div class="modal-content">
-
-            <div class="modal-body">
-                Are you sure you want to start over?
-            </div>
-            <div class="modal-footer">
-                <button type="button" data-dismiss="modal" class="btn btn-primary" id="resetPos">Reset Form</button>
-                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+            <div class="modal-content">
+                <div class="modal-body">
+                    Are you sure you want to start over?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary" id="resetPos">Reset Form</button>
+                    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                </div>
             </div>
         </div>
-        <!-- /.modal-content -->
-            </div>
     </div>
 
     <div id="wrapper">
