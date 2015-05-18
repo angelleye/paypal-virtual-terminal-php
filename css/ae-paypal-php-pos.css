@@ -63,3 +63,8 @@
 #page-wrapper.no-left-nav-page {
     margin:0px;
 }
+
+#pos-panel-errors,
+#pos-panel-success {
+    display: none;
+}

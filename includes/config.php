@@ -112,7 +112,7 @@ $config['CurrencyCode'] = 'USD';
  * Show left nav menu
  * TRUE == Show, FALSE == HIDE
  */
-$config['ShowNavMenuLeft'] = FALSE;
+$config['ShowNavMenuLeft'] = TRUE;
 
 /* End of file config.php */
 /* Location: ./includes/config.php */
