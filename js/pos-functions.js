@@ -109,13 +109,20 @@ $(function() {
         });
 
         $('#pos-reset-btn').on('click', function (e) {
-            $('#posResetConfirmModal')
-                .modal({ backdrop: 'static', keyboard: false })
-                .one('click', '#resetPos', function (e) {
-                    //reset function
-                    alert('reset the form');
-                    return false;
-                });
+            if( $('#pos-submit-btn').is(':visible') )
+            {
+                $('#posResetConfirmModal')
+                    .modal({backdrop: 'static', keyboard: false})
+                    .one('click', '#resetPos', function (e) {
+                        //reset function
+                        window.location = 'index.php';
+                    });
+            }
+            else
+            {
+                window.location = 'index.php';
+            }
+            return false;
         });
 
         $('#pos-submit-btn').click(function(){
