@@ -5,6 +5,7 @@ $(function() {
         $('#ae-paypal-pos-form').formValidation({
             framework: 'bootstrap',
             excluded: [':disabled', ':hidden', ':not(:visible)'],
+            focusInvalid: false,
             icon: {
                 valid: 'glyphicon glyphicon-ok',
                 invalid: 'glyphicon glyphicon-remove',
@@ -33,6 +34,11 @@ $(function() {
 
             }
         })
+            .on('err.form.fv', function(e) {
+                $('html, body').animate({
+                    scrollTop: $('.has-error:first').offset().top - 20
+                }, '400');
+            })
             .on('change', '[name="CreditCardType"]', function(e) {
                 var cardNumberVal = $('#CreditCardNumber').val();
                 if(cardNumberVal !== '')
