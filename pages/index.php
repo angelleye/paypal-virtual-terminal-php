@@ -61,6 +61,23 @@ require_once('../includes/config.php');
         </div>
     </div>
 
+    <!-- Modal HTML -->
+    <div id="posResetConfirmModal" class="modal fade">
+        <div class="modal-dialog">
+        <div class="modal-content">
+
+            <div class="modal-body">
+                Are you sure you want to start over?
+            </div>
+            <div class="modal-footer">
+                <button type="button" data-dismiss="modal" class="btn btn-primary" id="resetPos">Reset Form</button>
+                <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+            </div>
+        </div>
+        <!-- /.modal-content -->
+            </div>
+    </div>
+
     <div id="wrapper">
 
         <!-- Navigation -->
@@ -1182,7 +1199,7 @@ require_once('../includes/config.php');
                                     </div>
 
                                     <div id="pos-panel-reset">
-                                        <a class="btn btn-default" id="pos-submit-btn">Reset Form</a>
+                                        <a class="btn btn-default" id="pos-reset-btn">Reset Form</a>
                                     </div>
                                 </div>
                                 <!-- /.col-lg-12 -->

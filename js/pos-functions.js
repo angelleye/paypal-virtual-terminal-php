@@ -108,6 +108,20 @@ $(function() {
             ToggleIssueNumber();
         });
 
+        $('#pos-reset-btn').on('click', function (e) {
+            $('#posResetConfirmModal')
+                .modal({ backdrop: 'static', keyboard: false })
+                .one('click', '#resetPos', function (e) {
+                    //reset function
+                    alert('reset the form');
+                    return false;
+                });
+        });
+
+        $('#pos-submit-btn').click(function(){
+
+        });
+
     });
 });
 
