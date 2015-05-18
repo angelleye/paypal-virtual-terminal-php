@@ -114,5 +114,11 @@ $config['CurrencyCode'] = 'USD';
  */
 $config['ShowNavMenuLeft'] = TRUE;
 
+/**
+ * API selection
+ * 'PayPalPro, PayFlow, Rest'
+ */
+$config['ApiSelection'] = 'PayPalPro';
+
 /* End of file config.php */
 /* Location: ./includes/config.php */

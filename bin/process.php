@@ -9,10 +9,6 @@
 require_once('../includes/config.php');
 require_once('../vendor/autoload.php');
 
-// PayPal object
-$paypal_config = array('Sandbox' => $config['Sandbox'], 'APIUsername' => $config['APIUsername'], 'APIPassword' => $config['APIPassword'], 'APISignature' => $config['APISignature']);
-$paypal = new \angelleye\PayPal\PayPal($paypal_config);
-
 ############[ SESSIONS ]################
 $_SESSION['invoice'] = isset($_POST['InvoiceID']) ? $_POST['InvoiceID'] : '';
 $_SESSION['transaction_type'] = isset($_POST['TransactionType']) ? $_POST['TransactionType'] : 'Authorization';
@@ -85,6 +81,11 @@ $_SESSION['handling_amount'] = $_POST['HandlingAmount'];
 $_SESSION['tax_amount'] = $_POST['TaxAmount'];
 $_SESSION['billingInfo'] = isset($_POST['billingInfo']) ? $_POST['billingInfo'] : array();
 $_SESSION['shippingInfo'] = isset($_POST['shippingInfo']) ? $_POST['shippingInfo'] : array();
+
+
+// PayPal object
+$paypal_config = array('Sandbox' => $config['Sandbox'], 'APIUsername' => $config['APIUsername'], 'APIPassword' => $config['APIPassword'], 'APISignature' => $config['APISignature']);
+$paypal = new \angelleye\PayPal\PayPal($paypal_config);
 
 ##########[ Direct Payment ]############
 // Create new PayPal object
