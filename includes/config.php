@@ -109,10 +109,10 @@ $config['CurrencySign'] = '$';
 $config['CurrencyCode'] = 'USD';
 
 /**
- * Show/Hide left nav menu
+ * Show left nav menu
  * TRUE == Show, FALSE == HIDE
  */
-$config['HideNavMenuLeft'] = 'TRUE';
+$config['ShowNavMenuLeft'] = FALSE;
 
 /* End of file config.php */
 /* Location: ./includes/config.php */

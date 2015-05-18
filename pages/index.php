@@ -95,6 +95,7 @@ require_once('../includes/config.php');
             </ul>
             <!-- /.navbar-top-links -->
 
+            <?php if(isset($config['ShowNavMenuLeft']) && $config['ShowNavMenuLeft']) { ?>
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
@@ -109,10 +110,11 @@ require_once('../includes/config.php');
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
+            <?php } ?>
         </nav>
 
         <!-- Page Content -->
-        <div id="page-wrapper">
+        <div id="page-wrapper" class="<?php echo (isset($config['ShowNavMenuLeft']) && !$config['ShowNavMenuLeft']) ? 'no-left-nav-page' : ''; ?>">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">

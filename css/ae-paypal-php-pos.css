@@ -59,3 +59,7 @@
         display: block!important;
     }
 }
+
+#page-wrapper.no-left-nav-page {
+    margin:0px;
+}
