@@ -118,7 +118,7 @@ $config['ShowNavMenuLeft'] = TRUE;
  * API selection
  * 'PayPalPro, PayFlow, Rest'
  */
-$config['ApiSelection'] = 'PayPalPro';
+$config['ApiSelection'] = 'PayFlow';
 
 /* End of file config.php */
 /* Location: ./includes/config.php */
