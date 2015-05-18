@@ -744,9 +744,9 @@ require_once('../includes/config.php');
                                             </div>
 
                                             <div class="form-group" id="sameAsBilling">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="shippingInfo">Same as Billing</label>
+                                                <label class="col-lg-3 col-sm-4 control-label" for="shippingSameAsBilling">Same as Billing</label>
                                                 <div class="col-lg-4 col-sm-8">
-                                                    <input type="checkbox" class="checkbox" name="shippingInfo" id="shippingInfo" value="true" data-switch-state="false" />
+                                                    <input type="checkbox" class="checkbox" name="shippingSameAsBilling" id="shippingSameAsBilling" value="true" data-switch-state="false" />
                                                 </div>
                                             </div>
 
@@ -1157,7 +1157,7 @@ require_once('../includes/config.php');
                                         <div class="panel-heading">PayPal Errors</div>
                                         <div class="panel-body">
                                             <p>The following errors have occurred:</p>
-
+                                            <div id="pos-panel-errors-output"></div>
                                         </div>
                                     </div>
 
@@ -1166,7 +1166,7 @@ require_once('../includes/config.php');
                                         <div class="panel-heading">Payment Complete</div>
                                         <div class="panel-body">
                                             <p>Your payment has been processed; see payment details below:</p>
-
+                                            <div id="pos-panel-success-output"></div>
                                         </div>
                                     </div>
 

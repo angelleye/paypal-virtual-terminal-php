@@ -6,8 +6,8 @@
 /**
  * Include PayPal config file
  */
-require_once('config.php');
-require_once('../../vendor/autoload.php');
+require_once('../includes/config.php');
+require_once('../vendor/autoload.php');
 
 // PayPal object
 $paypal_config = array('Sandbox' => $config['Sandbox'], 'APIUsername' => $config['APIUsername'], 'APIPassword' => $config['APIPassword'], 'APISignature' => $config['APISignature']);
@@ -49,7 +49,7 @@ if (isset($_POST['billingInfo']) && $_POST['billingInfo'] == 'true'){
 }
 
 // If Shipping is different then billing
-if (isset($_POST['shippingInfo']) && $_POST['shippingInfo'] == "true")
+if (!isset($_POST['shippingDisabled']) && !isset($_POST['shippingSameAsBilling']))
 {
     $_SESSION['shipping_first_name'] = isset($_POST['ShippingFirstName']) ? $_POST['ShippingFirstName'] : '';
     $_SESSION['shipping_last_name'] = isset($_POST['ShippingLastName']) ? $_POST['ShippingLastName'] : '';
@@ -165,15 +165,22 @@ $DPData = array(
 
 $_SESSION['DPResult'] = $paypal->DoDirectPayment($DPData);
 
-echo json_encode($_SESSION['DPResult']);
-exit;
-
 if(strtoupper($_SESSION['DPResult']['ACK']) == 'FAILURE' || strtoupper($_SESSION['DPResult']['ACK']) == 'FAILUREWITHWARNING')
 {
     $_SESSION['paypal_errors'] = $_SESSION['DPResult']['ERRORS'];
     $PayPalErrors = $_SESSION['paypal_errors'];
 
-    echo json_encode(array('result' => 'error', 'result_data' => $PayPalErrors));
+    $result_data_html = '<ul>';
+    foreach($PayPalErrors as $error)
+    {
+        foreach($error as $k => $v)
+        {
+            $result_data_html.= '<li><strong>'.$k.'</strong>&nbsp;'.$v.'</li>';
+        }
+    }
+    $result_data_html.= '</ul>';
+
+    echo json_encode(array('result' => 'error', 'result_data' => $result_data_html));
     exit;
 }
 
@@ -183,11 +190,17 @@ $_SESSION['cvv2match'] = isset($_SESSION['DPResult']['CVV2MATCH']) ? $_SESSION['
 
 $returnData = array(
     'Transaction_ID' => $_SESSION['transaction_id'],
-    'AVS Code' => $_SESSION['avscode'],
-    'CVV2 Match' => $_SESSION['cvv2match']
+    'AVS_Code' => $_SESSION['avscode'],
+    'CVV2_Match' => $_SESSION['cvv2match']
 );
 
-$returnHtml = 'SUCCESS! (this needs to be an html table output';
+$returnHtml = '<h3>Payment Details</h3>';
+$returnHtml.= '<table class="table-responsive table-striped">';
+foreach($returnData as $k => $v)
+{
+    $returnHtml.= '<tr><th>'.str_replace("_"," ", $k).'</th><td>'.str_replace("_"," ", $v).'</td></tr>';
+}
+$returnHtml.= '</table>';
 
 echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
 exit;

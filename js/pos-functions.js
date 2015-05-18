@@ -57,7 +57,7 @@ $(function() {
             {
                 $('#sameAsBilling').show();
                 //$('#ShippingFirstName, #ShippingLastName, #ShippingStreet, #ShippingCity, #ShippingState, #ShippingCountryCode, #ShippingPostalCode').attr('required', 'required');
-                if(!$('#shippingInfo').bootstrapSwitch('state')) {
+                if(!$('#shippingSameAsBilling').bootstrapSwitch('state')) {
                     $('#FormShippingAddress').slideDown('400');
                 }
                 else
@@ -68,7 +68,7 @@ $(function() {
         });
 
         /* Toggle Billing Fields */
-        $('input[name="shippingInfo"]').on('switchChange.bootstrapSwitch', function(event, state) {
+        $('input[name="shippingSameAsBilling"]').on('switchChange.bootstrapSwitch', function(event, state) {
             //console.log(this); // DOM element
             //console.log(event); // jQuery event
             //console.log(state); // true | false
