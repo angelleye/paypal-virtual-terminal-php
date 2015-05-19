@@ -152,7 +152,7 @@ require_once('../includes/config.php');
                                                 <label class="col-lg-3 col-sm-4 control-label" for="swiper">Click to Swipe</label>
                                                 <div class="col-lg-6 col-sm-7">
                                                     <input type="password" class="form-control" name="swiper" id="swiper">
-                                                    <p class="help-block"><em>Note: A USB credit card reader is required</em></p>
+                                                    <p class="help-block"><em>Note: A <a target="_blank" href="https://www.usbswiper.com/usbswiper-usb-magnetic-stripe-credit-card-reader.html?utm_source=angelleye&utm_medium=paypal-pos&utm_campaign=usbswiper">USB credit card reader</a> is required for swipe functionality.</em></p>
                                                 </div>
                                             </div>
                                         </div>
