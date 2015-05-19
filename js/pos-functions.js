@@ -164,8 +164,8 @@ function checkItem(e)
         if(document.activeElement.name == 'CreditCardExpYear')
         {
             document.getElementById('CreditCardSecurityCode').focus();
-            return false;
         }
+        return false;
     }
 }
 
