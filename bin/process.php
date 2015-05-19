@@ -488,6 +488,9 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $config['RESTAPIClient_Id'],
         $config['RESTAPIClient_Secret']));
 
+    // Add to header
+    $paypal_rest->addRequestHeader('PayPal-Partner-Attribution-Id', 'AngellEYE_SP_POS_VT');
+
     $addr = new \PayPal\Api\Address();
     $addr->setLine1($_SESSION['billing_street1']);
     $addr->setLine2($_SESSION['billing_street2']);
