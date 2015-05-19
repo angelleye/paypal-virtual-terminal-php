@@ -87,7 +87,7 @@ require_once('../includes/config.php');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">PayPal PHP Virtual Terminal POS</a>
+                <a class="navbar-brand" href="index.php">PayPal PHP Virtual Terminal POS</a>
             </div>
             <!-- /.navbar-header -->
 
