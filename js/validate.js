@@ -5,6 +5,7 @@ $(function() {
         $('#ae-paypal-pos-form').formValidation({
             framework: 'bootstrap',
             excluded: [':disabled', ':hidden', ':not(:visible)'],
+            focusInvalid: false,
             icon: {
                 valid: 'glyphicon glyphicon-ok',
                 invalid: 'glyphicon glyphicon-remove',
@@ -33,6 +34,11 @@ $(function() {
 
             }
         })
+            .on('err.form.fv', function(e) {
+                $('html, body').animate({
+                    scrollTop: $('.has-error:first').offset().top - 20
+                }, '400');
+            })
             .on('change', '[name="CreditCardType"]', function(e) {
                 var cardNumberVal = $('#CreditCardNumber').val();
                 if(cardNumberVal !== '')
@@ -50,10 +56,17 @@ $(function() {
                 // Prevent form submission
                 e.preventDefault();
 
+                $('#pos-panel-success').hide();
+                $('#pos-panel-errors').hide();
+
                 var $form = $(e.target),
                     fv    = $form.data('formValidation');
 
                 // VALID FORM - OK TO SUBMIT
+
+                // disable/animate process button
+                $('#pos-submit-btn').attr('disabled', 'disabled');
+                $('#pos-submit-btn').html('<i class="fa fa-spinner fa-spin"></i>&nbsp;Processing...');
 
                 // Use Ajax to submit form data
                 $.ajax({
@@ -63,39 +76,32 @@ $(function() {
                     success: function(response) {
                         var responseData = $.parseJSON(response);
 
-                        console.log(responseData);
-                        return false;
+                        //console.log(responseData);
+                        //return false;
 
                         if ( "error" != responseData.result )
                         {
-                            $('#data-output-panel').hide();
-                            $('#profile-cancel-submit-btn').html('Cancel Profile &amp; Refund');
-                            $('#profile-cancel-submit-btn').removeAttr('disabled');
-
-                            $('#success-output-panel').slideDown(400);
-                            $('#payflow-refund-success-overview').html(responseData.result_html);
+                            // reset and hide process button
+                            $('#pos-submit-btn').removeAttr('disabled');
+                            $('#pos-submit-btn').html('Process Payment');
+                            $('#pos-submit-btn').hide();
+                            // show success panel
+                            $('#pos-panel-success').slideDown(400);
+                            $('#pos-panel-success-output').html(responseData.result_html);
                             return false;
                         }
                         else
                         {
-                            if(refundAmount == "0.00")
-                            {
-                                $('#profile-cancel-submit-btn').html('Cancel Profile');
-                            }
-                            else
-                            {
-                                $('#profile-cancel-submit-btn').html('Cancel Profile &amp; Refund');
-                            }
-
-                            $('#profile-cancel-submit-btn').removeAttr('disabled');
-
-                            $('#errors-output-panel').slideDown(400);
-                            $('#errors-output').html('<strong>ERROR:&nbsp;</strong>' + responseData.result_data);
+                            $('#pos-submit-btn').removeAttr('disabled');
+                            $('#pos-submit-btn').html('Process Payment');
+                            // show success panel
+                            $('#pos-panel-errors').slideDown(400);
+                            $('#pos-panel-errors-output').html(responseData.result_data);
                             return false;
                         }
-
                     }
                 });
+
             }
         );
 

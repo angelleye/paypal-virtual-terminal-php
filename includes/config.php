@@ -54,6 +54,13 @@ $config['PayFlowVendor'] = $config['Sandbox'] ? 'angelleye' : '';
 $config['PayFlowPartner'] = $config['Sandbox'] ? 'PayPal' : 'PayPal';
 
 /*
+ * PayPal REST API Credentials
+ * ------------------------------
+ */
+$config['RESTAPIClient_Id'] = $config['Sandbox'] ? 'AbWX5DtTNUferjgDtrQfRQjqZIOnK25idCvaPH-R-VUpJZMHFG83LPU_o3-5d32dpnO2oVydlzIHjBRX' : '';
+$config['RESTAPIClient_Secret'] = $config['Sandbox'] ? 'EBn7ARTYLux062X74_hFl_wKkSJMpq69oaVWTMRWWvH9QNt_JMjJ8G0rGczEB86skZf90goieMOQA0Qu' : '';
+
+/*
  * PayPal Application ID
  * --------------------------------------
  * The application is only required with Adaptive Payments applications.
@@ -108,4 +115,17 @@ $config['CurrencySign'] = '$';
  */
 $config['CurrencyCode'] = 'USD';
 
-?>
+/**
+ * Show left nav menu
+ * TRUE == Show, FALSE == HIDE
+ */
+$config['ShowNavMenuLeft'] = TRUE;
+
+/**
+ * API selection
+ * 'PayPalPro, PayFlow, Rest'
+ */
+$config['ApiSelection'] = 'Rest';
+
+/* End of file config.php */
+/* Location: ./includes/config.php */

@@ -2,7 +2,7 @@
 /**
  * Include PayPal config file
  */
-require_once('../angelleye/paypal/config.php');
+require_once('../includes/config.php');
 
 ?>
 <!DOCTYPE html>
@@ -34,7 +34,7 @@ require_once('../angelleye/paypal/config.php');
     <link href="../dist/css/sb-admin-2.css" rel="stylesheet" type="text/css">
 
     <!-- Custom CSS -->
-    <link href="../angelleye/css/ae-paypal-php-pos.css" rel="stylesheet" type="text/css">
+    <link href="../css/ae-paypal-php-pos.css" rel="stylesheet" type="text/css">
 
     <!-- Custom Fonts -->
     <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
@@ -46,7 +46,7 @@ require_once('../angelleye/paypal/config.php');
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" type="image/x-icon" href="../angelleye/images/favicon.ico">
+    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
 
 </head>
 
@@ -56,7 +56,22 @@ require_once('../angelleye/paypal/config.php');
     <div id="posInstructionsModal" class="modal fade">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Content will be loaded here from "remote.php" file -->
+                <!-- Content will be loaded here from file -->
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal HTML -->
+    <div id="posResetConfirmModal" class="modal fade">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    Are you sure you want to start over?
+                </div>
+                <div class="modal-footer">
+                    <button type="button" data-dismiss="modal" class="btn btn-primary" id="resetPos">Reset Form</button>
+                    <button type="button" data-dismiss="modal" class="btn">Cancel</button>
+                </div>
             </div>
         </div>
     </div>
@@ -72,7 +87,7 @@ require_once('../angelleye/paypal/config.php');
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="index.html">PayPal PHP Virtual Terminal POS</a>
+                <a class="navbar-brand" href="index.php">PayPal PHP Virtual Terminal POS</a>
             </div>
             <!-- /.navbar-header -->
 
@@ -95,6 +110,7 @@ require_once('../angelleye/paypal/config.php');
             </ul>
             <!-- /.navbar-top-links -->
 
+            <?php if(isset($config['ShowNavMenuLeft']) && $config['ShowNavMenuLeft']) { ?>
             <div class="navbar-default sidebar" role="navigation">
                 <div class="sidebar-nav navbar-collapse">
                     <ul class="nav" id="side-menu">
@@ -109,10 +125,11 @@ require_once('../angelleye/paypal/config.php');
                 <!-- /.sidebar-collapse -->
             </div>
             <!-- /.navbar-static-side -->
+            <?php } ?>
         </nav>
 
         <!-- Page Content -->
-        <div id="page-wrapper">
+        <div id="page-wrapper" class="<?php echo (isset($config['ShowNavMenuLeft']) && !$config['ShowNavMenuLeft']) ? 'no-left-nav-page' : ''; ?>">
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-lg-12">
@@ -122,104 +139,10 @@ require_once('../angelleye/paypal/config.php');
                         </div>
 
                         <!-- POS form -->
-                        <form class="form-horizontal" id="ae-paypal-pos-form" name="ae-paypal-pos-form" data-currency-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" role="form" method="POST" action="../angelleye/paypal/process.php" autocomplete="off">
+                        <form class="form-horizontal" id="ae-paypal-pos-form" name="ae-paypal-pos-form" data-currency-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" role="form" method="POST" action="../bin/process.php" autocomplete="off">
 
                             <div class="row">
                                 <div class="col-lg-12">
-
-                                    <!-- Payment Info -->
-                                    <div class="panel panel-default" id="pos-panel-payment-info">
-                                        <div class="panel-heading text-uppercase">Payment Info</div>
-                                        <div class="panel-body">
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="TransactionType">Transaction Type</label>
-                                                <div class="col-lg-2 col-sm-3">
-                                                    <select class="form-control" name="TransactionType" id="TransactionType" required="required">
-                                                        <option value="Authorization">Auth</option>
-                                                        <option value="Sale" selected="selected">Sale</option>
-                                                    </select>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="NetAmount">Net Order Amount</label>
-                                                <div class="col-lg-2 col-sm-3">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
-                                                        <input type="text" class="form-control" name="NetAmount" id="NetAmount" required="required" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="ShippingAmount">Shipping Amount</label>
-                                                <div class="col-lg-2 col-sm-3">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
-                                                        <input type="text" class="form-control" name="ShippingAmount" id="ShippingAmount" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" />
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="HandlingAmount">Handling Amount</label>
-                                                <div class="col-lg-2 col-sm-3">
-                                                    <div class="input-group">
-                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
-                                                        <input type="text" class="form-control" name="HandlingAmount" id="HandlingAmount" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false"/>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group" id="DivTaxRate">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="TaxRate">Tax Rate</label>
-                                                <div class="col-lg-2 col-sm-3">
-                                                    <div class="input-group">
-                                                        <input type="text" class="form-control" name="TaxRate" id="TaxRate" maxlength="4" />
-                                                        <div class="input-group-addon">%</div>
-                                                    </div>
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="TaxAmount">Tax Amount</label>
-                                                <div class="col-lg-2 col-sm-3">
-                                                    <div id="TaxAmountDisplay" class="form-control-static"><strong>0.00</strong></div>
-                                                    <input type="hidden" name="TaxAmount" id="TaxAmount" value="0" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="GrandTotal">Grand Total</label>
-                                                <div class="col-lg-2 col-sm-3">
-                                                    <div id="GrandTotalDisplay" class="form-control-static"><strong>0.00</strong></div>
-                                                    <input type="hidden" name="GrandTotal" id="GrandTotal" value="0" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="InvoiceID">Invoice Number</label>
-                                                <div class="col-lg-3 col-sm-4">
-                                                    <input type="text" class="form-control" name="InvoiceID" id="InvoiceID" maxlength="35" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="ItemName">ItemName</label>
-                                                <div class="col-lg-3 col-sm-8">
-                                                    <input type="text" class="form-control" name="ItemName" id="ItemName" maxlength="70" />
-                                                </div>
-                                            </div>
-
-                                            <div class="form-group">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="Notes">Notes</label>
-                                                <div class="col-lg-6 col-sm-8">
-                                                    <textarea class="form-control" name="Notes" id="Notes"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
 
                                     <!-- Swipe Card -->
                                     <div class="panel panel-default" id="pos-panel-swipe">
@@ -227,8 +150,8 @@ require_once('../angelleye/paypal/config.php');
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="swiper">Click to Swipe</label>
-                                                <div class="col-lg-6 col-sm-6">
-                                                    <input type="text" class="form-control" name="swiper" id="swiper" onchange="ParseStripeData();" onblur="ClearStripeData();" onfocus="ClearStripeData()">
+                                                <div class="col-lg-6 col-sm-7">
+                                                    <input type="password" class="form-control" name="swiper" id="swiper">
                                                     <p class="help-block"><em>Note: A USB credit card reader is required</em></p>
                                                 </div>
                                             </div>
@@ -241,21 +164,21 @@ require_once('../angelleye/paypal/config.php');
                                         <div class="panel-body">
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="BillingFirstName">First Name</label>
-                                                <div class="col-lg-3 col-sm-4">
+                                                <div class="col-lg-3 col-sm-5">
                                                     <input type="text" class="form-control" name="BillingFirstName" id="BillingFirstName" maxlength="35" required="required" />
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="BillingLastName">Last Name</label>
-                                                <div class="col-lg-3 col-sm-4">
+                                                <div class="col-lg-3 col-sm-5">
                                                     <input type="text" class="form-control" name="BillingLastName" id="BillingLastName" maxlength="35" required="required" />
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="CreditCardType">Card Type</label>
-                                                <div class="col-lg-2 col-sm-3">
+                                                <div class="col-lg-2 col-sm-5">
                                                     <select class="form-control" name="CreditCardType" id="CreditCardType" required="required">
                                                         <option value="">- Select</option>
                                                         <option value="Visa">Visa</option>
@@ -270,14 +193,14 @@ require_once('../angelleye/paypal/config.php');
 
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="CreditCardNumber">Card Number</label>
-                                                <div class="col-lg-4 col-sm-6">
+                                                <div class="col-lg-4 col-sm-7">
                                                     <input type="text" class="form-control" name="CreditCardNumber" id="CreditCardNumber" maxlength="35" required="required" />
                                                 </div>
                                             </div>
 
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="CreditCardExpMo">Exp Mo.</label>
-                                                <div class="col-lg-2 col-sm-3">
+                                                <div class="col-lg-2 col-sm-5">
                                                     <select class="form-control" name="CreditCardExpMo" id="CreditCardExpMo" required="required">
                                                         <option value="">- Select</option>
                                                         <option value="01">01</option>
@@ -298,7 +221,7 @@ require_once('../angelleye/paypal/config.php');
 
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="CreditCardExpYear">Exp. Year</label>
-                                                <div class="col-lg-2 col-sm-3">
+                                                <div class="col-lg-2 col-sm-5">
                                                     <select class="form-control" name="CreditCardExpYear" id="CreditCardExpYear" required="required">
                                                         <option value="">- Select</option>
                                                         <option value="2015">2015</option>
@@ -327,6 +250,100 @@ require_once('../angelleye/paypal/config.php');
                                                 <label class="col-lg-3 col-sm-4 control-label" for="CreditCardSecurityCode">Security Code</label>
                                                 <div class="col-lg-2 col-sm-3">
                                                     <input type="text" class="form-control" name="CreditCardSecurityCode" id="CreditCardSecurityCode" maxlength="5" />
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <!-- Payment Info -->
+                                    <div class="panel panel-default" id="pos-panel-payment-info">
+                                        <div class="panel-heading text-uppercase">Payment Info</div>
+                                        <div class="panel-body">
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="TransactionType">Transaction Type</label>
+                                                <div class="col-lg-3 col-sm-5">
+                                                    <select class="form-control" name="TransactionType" id="TransactionType" required="required">
+                                                        <option value="Authorization">Auth</option>
+                                                        <option value="Sale" selected="selected">Sale</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="NetAmount">Net Order Amount</label>
+                                                <div class="col-lg-3 col-sm-5">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
+                                                        <input type="text" class="form-control" name="NetAmount" id="NetAmount" required="required" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="ShippingAmount">Shipping Amount</label>
+                                                <div class="col-lg-3 col-sm-5">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
+                                                        <input type="text" class="form-control" name="ShippingAmount" id="ShippingAmount" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false" />
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="HandlingAmount">Handling Amount</label>
+                                                <div class="col-lg-3 col-sm-5">
+                                                    <div class="input-group">
+                                                        <div class="input-group-addon"><?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?></div>
+                                                        <input type="text" class="form-control" name="HandlingAmount" id="HandlingAmount" pattern="([0-9]|\$|,|.)+" data-a-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" data-m-dec="2" data-w-empty="" data-l-zero="keep" data-a-form="false"/>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group" id="DivTaxRate">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="TaxRate">Tax Rate</label>
+                                                <div class="col-lg-3 col-sm-5">
+                                                    <div class="input-group">
+                                                        <input type="text" class="form-control" name="TaxRate" id="TaxRate" maxlength="4" />
+                                                        <div class="input-group-addon">%</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="TaxAmount">Tax Amount</label>
+                                                <div class="col-lg-3 col-sm-5">
+                                                    <div id="TaxAmountDisplay" class="form-control-static"><strong>0.00</strong></div>
+                                                    <input type="hidden" name="TaxAmount" id="TaxAmount" value="0" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="GrandTotal">Grand Total</label>
+                                                <div class="col-lg-3 col-sm-5">
+                                                    <div id="GrandTotalDisplay" class="form-control-static"><strong>0.00</strong></div>
+                                                    <input type="hidden" name="GrandTotal" id="GrandTotal" value="0" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="InvoiceID">Invoice Number</label>
+                                                <div class="col-lg-3 col-sm-5">
+                                                    <input type="text" class="form-control" name="InvoiceID" id="InvoiceID" maxlength="35" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="ItemName">ItemName</label>
+                                                <div class="col-lg-3 col-sm-8">
+                                                    <input type="text" class="form-control" name="ItemName" id="ItemName" maxlength="70" />
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="col-lg-3 col-sm-4 control-label" for="Notes">Notes</label>
+                                                <div class="col-lg-6 col-sm-8">
+                                                    <textarea class="form-control" name="Notes" id="Notes"></textarea>
                                                 </div>
                                             </div>
                                         </div>
@@ -742,9 +759,9 @@ require_once('../angelleye/paypal/config.php');
                                             </div>
 
                                             <div class="form-group" id="sameAsBilling">
-                                                <label class="col-lg-3 col-sm-4 control-label" for="shippingInfo">Same as Billing</label>
+                                                <label class="col-lg-3 col-sm-4 control-label" for="shippingSameAsBilling">Same as Billing</label>
                                                 <div class="col-lg-4 col-sm-8">
-                                                    <input type="checkbox" class="checkbox" name="shippingInfo" id="shippingInfo" value="true" data-switch-state="false" />
+                                                    <input type="checkbox" class="checkbox" name="shippingSameAsBilling" id="shippingSameAsBilling" value="true" data-switch-state="false" />
                                                 </div>
                                             </div>
 
@@ -1155,7 +1172,7 @@ require_once('../angelleye/paypal/config.php');
                                         <div class="panel-heading">PayPal Errors</div>
                                         <div class="panel-body">
                                             <p>The following errors have occurred:</p>
-
+                                            <div id="pos-panel-errors-output"></div>
                                         </div>
                                     </div>
 
@@ -1164,7 +1181,7 @@ require_once('../angelleye/paypal/config.php');
                                         <div class="panel-heading">Payment Complete</div>
                                         <div class="panel-body">
                                             <p>Your payment has been processed; see payment details below:</p>
-
+                                            <div id="pos-panel-success-output"></div>
                                         </div>
                                     </div>
 
@@ -1180,7 +1197,7 @@ require_once('../angelleye/paypal/config.php');
                                     </div>
 
                                     <div id="pos-panel-reset">
-                                        <a class="btn btn-default" id="pos-submit-btn">Reset Form</a>
+                                        <a class="btn btn-default" id="pos-reset-btn">Reset Form</a>
                                     </div>
                                 </div>
                                 <!-- /.col-lg-12 -->
@@ -1219,13 +1236,13 @@ require_once('../angelleye/paypal/config.php');
     <script src="../dist/js/sb-admin-2.js"></script>
 
     <!-- Custom JavaScript -->
-    <script src="../angelleye/js/ae-paypal-php-pos-scripts.js"></script>
+    <script src="../js/pos-functions.js"></script>
 
     <!-- Validate Credit Card Number JavaScript -->
-    <script src="../angelleye/js/validate-credit-card-number.js"></script>
+    <script src="../js/validate-credit-card-number.js"></script>
 
     <!-- CardStripeData Parser JavaScript -->
-    <script src="../angelleye/js/parse-track-data.js"></script>
+    <script src="../js/parse-track-data.js"></script>
 
     <!-- AutoNumeric JavaScript -->
     <script src="../js/autoNumeric.js"></script>
@@ -1235,7 +1252,7 @@ require_once('../angelleye/paypal/config.php');
     <script src="../js/formvalidation/framework/bootstrap.min.js"></script>
 
     <!-- Form Validation JavaScript -->
-    <script src="../angelleye/js/validate.js"></script>
+    <script src="../js/validate.js"></script>
 
 
 </body>

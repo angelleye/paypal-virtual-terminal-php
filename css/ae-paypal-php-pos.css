@@ -59,3 +59,21 @@
         display: block!important;
     }
 }
+
+#page-wrapper.no-left-nav-page {
+    margin:0px;
+}
+
+#pos-panel-errors,
+#pos-panel-success {
+    display: none;
+}
+
+#pos-panel-errors ul li {
+    list-style: none!important;
+}
+
+#pos-panel-success table th,
+#pos-panel-success table td {
+    padding:10px;
+}

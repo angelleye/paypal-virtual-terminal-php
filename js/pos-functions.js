@@ -57,7 +57,7 @@ $(function() {
             {
                 $('#sameAsBilling').show();
                 //$('#ShippingFirstName, #ShippingLastName, #ShippingStreet, #ShippingCity, #ShippingState, #ShippingCountryCode, #ShippingPostalCode').attr('required', 'required');
-                if(!$('#shippingInfo').bootstrapSwitch('state')) {
+                if(!$('#shippingSameAsBilling').bootstrapSwitch('state')) {
                     $('#FormShippingAddress').slideDown('400');
                 }
                 else
@@ -68,7 +68,7 @@ $(function() {
         });
 
         /* Toggle Billing Fields */
-        $('input[name="shippingInfo"]').on('switchChange.bootstrapSwitch', function(event, state) {
+        $('input[name="shippingSameAsBilling"]').on('switchChange.bootstrapSwitch', function(event, state) {
             //console.log(this); // DOM element
             //console.log(event); // jQuery event
             //console.log(state); // true | false
@@ -90,24 +90,83 @@ $(function() {
             updateGrandTotal();
         });
 
+        /* Swipe field */
+        $('#swiper').change(function(){
+            ParseStripeData();
+        });
+
+        $('#swiper').focus(function(){
+            ClearStripeData();
+        });
+
+        $('#swiper').blur(function(){
+            BlurStripeField();
+        });
+
         /* Toggle Issue Number on Credit Card Type change */
         $('#CreditCardType').change(function(){
             ToggleIssueNumber();
         });
 
-        /* Validate Credit Card Number */
-        $('#CreditCardNumber').change(function(){
-            //ValidateCreditCardNumber();
-        });
-
-        // Submit offer form
-        /*$('#ae-paypal-pos-form').submit(function() {
-            alert('submit');
+        $('#pos-reset-btn').on('click', function (e) {
+            if( $('#pos-submit-btn').is(':visible') )
+            {
+                $('#posResetConfirmModal')
+                    .modal({backdrop: 'static', keyboard: false})
+                    .one('click', '#resetPos', function (e) {
+                        //reset function
+                        window.location = 'index.php';
+                    });
+            }
+            else
+            {
+                window.location = 'index.php';
+            }
             return false;
-        });*/
+        });
 
     });
 });
+
+function DisableEnterKey(e)
+{
+    var key;
+    if(window.event)
+        key = window.event.keyCode; //IE
+    else
+        key = e.which; //firefox
+
+    return (key != 13);
+}
+
+function checkItem(e)
+{
+    if (window.event)
+    {
+        if (event.keyCode==13) //trap enter
+        {
+            //if not textarea type
+            if(document.activeElement.type!='textarea')
+            {
+                event.keyCode=9;
+            } //convert to Tab key
+        }
+        return event.keyCode;
+    }
+
+    if (e.keyCode)
+        code = e.keyCode;
+    else if (e.which)
+        code = e.which;
+
+    if (code==13)
+    {
+        document.getElementById('CreditCardSecurityCode').focus();
+        return false;
+    }
+}
+
+document.onkeydown=checkItem;
 
 /* Validate Credit Card Number field */
 function ValidateCreditCardNumber()
@@ -117,10 +176,21 @@ function ValidateCreditCardNumber()
     return (checkCreditCard(CardNo,CardType)) ? true : false;
 }
 
+/* Clear data from card stripe swiped */
+function ClearStripeData() {
+    var TrackData = $('#swiper');
+    TrackData.val('');
+}
+
+/* Blur swipe field */
+function BlurStripeField() {
+    ClearStripeData();
+    $('#CreditCardSecurityCode').focus();
+}
+
 /* Parse data from card stripe swiped */
-function ParseStripeData()
-{
-    var TrackData = $('%CreditCardStripe').val();
+function ParseStripeData() {
+    var TrackData = $('#swiper').val();
     var p = new SwipeParserObj(TrackData);
 
     if(p.hasTrack1)
@@ -157,7 +227,6 @@ function ParseStripeData()
     }
 
     ToggleIssueNumber();
-    ToggleSecurityCode();
 }
 
 /* Toggle Issue Number */
@@ -174,27 +243,15 @@ function ToggleIssueNumber()
         $('#DivCreditCardIssueNumber').hide();
         $('#CreditCardIssueNumber').removeAttr('required');
     }
-}
-
-/* Toggle Security Code */
-function ToggleSecurityCode()
-{
-    if($('#CreditCardSecurityCodeIndicator').val() == 1)
-    {
-        $('#DivCreditCardSecurityCode').show();
-    }
-    else
-    {
-        $('#DivCreditCardSecurityCode').hide();
-    }
+    return false;
 }
 
 /* Update Sales Tax */
 function updateSalesTax()
 {
     var currencySign = $('#ae-paypal-pos-form').attr('data-currency-sign');
-    var taxAmount = ( $('#TaxRate').val() / 100 ) * $('#NetAmount').val();
-    $('#TaxAmountDisplay').html('<i>(' + currencySign + ' ' + roundNumber(taxAmount, 2) + ')</i>');
+    var taxAmount = ( $('#TaxRate').val().replace(/,/g, '') / 100 ) * $('#NetAmount').val().replace(/,/g, '');
+    $('#TaxAmountDisplay').html('<i>(' + currencySign + ' ' + roundNumber(taxAmount, 2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ')</i>');
     var taxAmountRounded = roundNumber(taxAmount,2);
     $('#TaxAmount').val(taxAmountRounded);
     return false;
@@ -204,13 +261,13 @@ function updateSalesTax()
 function updateGrandTotal()
 {
     var currencySign = $('#ae-paypal-pos-form').attr('data-currency-sign');
-    var netAmount = ( $('#NetAmount').val() * 1 );
-    var shippingAmount = ( $('#ShippingAmount').val() * 1 );
-    var handlingAmount = ( $('#HandlingAmount').val() * 1 );
-    var taxAmount = $('#TaxAmount').val() * 1;
+    var netAmount = ( $('#NetAmount').val().replace(/,/g, '') * 1 );
+    var shippingAmount = ( $('#ShippingAmount').val().replace(/,/g, '') * 1 );
+    var handlingAmount = ( $('#HandlingAmount').val().replace(/,/g, '') * 1 );
+    var taxAmount = $('#TaxAmount').val().replace(/,/g, '') * 1;
     var grandTotal = (netAmount + shippingAmount + handlingAmount + taxAmount);
     var grandTotal = grandTotal.toFixed(2);
-    $('#GrandTotalDisplay').html('<strong>' + currencySign + ' ' + grandTotal + '</strong>');
+    $('#GrandTotalDisplay').html('<strong>' + currencySign + ' ' + grandTotal.replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + '</strong>');
     $('#GrandTotal').val(grandTotal);
     return false;
 }
