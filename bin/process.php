@@ -474,11 +474,11 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $_SESSION['shipping_country_code'] = isset($_SESSION['billing_country_code']) ? $_SESSION['billing_country_code'] : '';
     }
 
-    $_SESSION['amount'] = isset($_POST['GrandTotal']) ? $_POST['GrandTotal'] : '0.00';
-    $_SESSION['subtotal'] = isset($_POST['NetAmount']) ? $_POST['NetAmount'] : '0.00';
-    $_SESSION['shipping_amount'] = ( isset($_POST['ShippingAmount']) && $_POST['ShippingAmount'] != '') ? $_POST['ShippingAmount'] : '0.00';
-    $_SESSION['handling_amount'] = ( isset($_POST['HandlingAmount']) && $_POST['HandlingAmount'] != '') ? $_POST['HandlingAmount'] : '0.00';
-    $_SESSION['tax_amount'] = ( isset($_POST['TaxAmount']) && $_POST['TaxAmount'] != '') ? $_POST['TaxAmount'] : '0.00';
+    $_SESSION['amount'] = isset($_POST['GrandTotal']) ? str_replace(",","", $_POST['GrandTotal']) : '0.00';
+    $_SESSION['subtotal'] = isset($_POST['NetAmount']) ? str_replace(",","", $_POST['NetAmount']) : '0.00';
+    $_SESSION['shipping_amount'] = ( isset($_POST['ShippingAmount']) && $_POST['ShippingAmount'] != '') ? str_replace(",","", $_POST['ShippingAmount']) : '0.00';
+    $_SESSION['handling_amount'] = ( isset($_POST['HandlingAmount']) && $_POST['HandlingAmount'] != '') ? str_replace(",","", $_POST['HandlingAmount']) : '0.00';
+    $_SESSION['tax_amount'] = ( isset($_POST['TaxAmount']) && $_POST['TaxAmount'] != '') ? str_replace(",","", $_POST['TaxAmount']) : '0.00';
     $_SESSION['billingInfo'] = isset($_POST['billingInfo']) ? $_POST['billingInfo'] : array();
     $_SESSION['shippingInfo'] = isset($_POST['shippingInfo']) ? $_POST['shippingInfo'] : array();
 
@@ -517,6 +517,7 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     $amountDetails->setSubtotal(str_replace(",","", number_format($_SESSION['subtotal'],2)));
     $amountDetails->setTax(str_replace(",","", number_format($_SESSION['tax_amount'],2)) );
     $amountDetails->setShipping(str_replace(",","", number_format($_SESSION['shipping_amount'],2)));
+    $amountDetails->setHandlingFee(str_replace(",","", number_format($_SESSION['handling_amount'],2)));
 
     $amount = new \PayPal\Api\Amount();
     $amount->setCurrency(isset($config['CurrencyCode']) ? $config['CurrencyCode'] : 'USD');
@@ -525,7 +526,9 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
 
     $transaction = new \PayPal\Api\Transaction();
     $transaction->setAmount($amount);
-    $transaction->setDescription('PayPal Payments Pro Virtual Terminal Sale');
+    $transaction->setDescription( (isset($_SESSION['item_name']) && $_SESSION['item_name'] != '') ? $_SESSION['item_name'] : 'PayPal Payments Pro Virtual Terminal Sale');
+    $transaction->setInvoiceNumber($_SESSION['invoice']);
+    $transaction->setCustom($_SESSION['notes']);
 
     $payment = new \PayPal\Api\Payment();
     $payment->setIntent(strtolower($_SESSION['transaction_type']));
@@ -553,7 +556,7 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
             echo json_encode(array('result' => 'error', 'result_data' => $result_data_html));
             exit;
         }
-    } catch (Exception $ex) {
+    } catch ( \PayPal\Exception\PayPalConnectionException $ex) {
         $PayPalErrors = json_decode($ex->getData());
 
         $result_data_html = '<ul>';
