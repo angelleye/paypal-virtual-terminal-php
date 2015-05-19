@@ -10,6 +10,10 @@ $(function() {
         {
             $('#swiper').focus();
         }
+        else
+        {
+            $('#BillingFirstName').focus();
+        }
 
         /* Bootstrap Switch Plugin on checkboxes for POS form */
         if($('#ae-paypal-pos-form').html().length != 0)
