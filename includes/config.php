@@ -131,7 +131,7 @@ $config['ShowNavMenuLeft'] = TRUE;
  * Show swipe field on pos form
  * TRUE == Show, FALSE == HIDE
  */
-$config['ShowSwipeField'] = FALSE;
+$config['ShowSwipeField'] = TRUE;
 
 
 /* End of file config.php */
