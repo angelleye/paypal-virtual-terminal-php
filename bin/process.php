@@ -145,7 +145,7 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
 
     $PaymentDetails = array(
         'amt' => $_SESSION['amount'],                            // Required. Total amount of the order, including shipping, handling, and tax.
-        'currencycode' => 'USD',                                // A three-character currency code.  Default is USD.
+        'currencycode' => $config['CurrencyCode'],                                // A three-character currency code.  Default is USD.
         'itemamt' => $_SESSION['subtotal'],        // Required if you specify itemized L_AMT fields. Sum of cost of all items in this order.
         'shippingamt' => $_SESSION['shipping_amount'],                // Total shipping costs for this order.  If you specify SHIPPINGAMT you mut also specify a value for ITEMAMT.
         'handlingamt' => $_SESSION['handling_amount'],                                    // Total handling costs for this order.  If you specify HANDLINGAMT you mut also specify a value for ITEMAMT.
@@ -295,7 +295,8 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     $_SESSION['billingInfo'] = isset($_POST['billingInfo']) ? $_POST['billingInfo'] : array();
     $_SESSION['shippingInfo'] = isset($_POST['shippingInfo']) ? $_POST['shippingInfo'] : array();
 
-    // Prepare request arrays
+    ##########[ Process Transaction ]############
+    // Create new PayPal object
     $PayPalRequestData = array(
         'tender'=>'C', 				                // Required.  The method of payment.  Values are: A = ACH, C = Credit Card, D = Pinless Debit, K = Telecheck, P = PayPal
         'trxtype'=> ($_SESSION['transaction_type'] == 'Sale') ? 'S' : 'A', 				            // Required.  Indicates the type of transaction to perform.  Values are:  A = Authorization, B = Balance Inquiry, C = Credit, D = Delayed Capture, F = Voice Authorization, I = Inquiry, L = Data Upload, N = Duplicate Transaction, S = Sale, V = Void
@@ -409,9 +410,164 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     /**
      * REST API
      */
-    // PayPal object
-    $paypal_config = array('Sandbox' => $config['Sandbox'], 'APIUsername' => $config['APIUsername'], 'APIPassword' => $config['APIPassword'], 'APISignature' => $config['APISignature']);
-    $paypal = new \angelleye\PayPal\PayFlow($paypal_config);
+    ############[ SESSIONS ]################
+    $_SESSION['invoice'] = isset($_POST['InvoiceID']) ? $_POST['InvoiceID'] : '';
+    $_SESSION['notes'] = isset($_POST['Notes']) ? $_POST['Notes'] : '';
+    $_SESSION['item_name'] = isset($_POST['ItemName']) ? $_POST['ItemName'] : '';
+    $_SESSION['transaction_type'] = isset($_POST['TransactionType']) ? $_POST['TransactionType'] : 'Authorization';
+    $_SESSION['cc_type'] = isset($_POST['CreditCardType']) ? $_POST['CreditCardType'] : '';
+    $_SESSION['cc_number'] = isset($_POST['CreditCardNumber']) ? $_POST['CreditCardNumber'] : '';
+    $_SESSION['cc_exp_month'] = isset($_POST['CreditCardExpMo']) ?  $_POST['CreditCardExpMo'] : '';
+    $_SESSION['cc_exp_year'] = isset($_POST['CreditCardExpYear']) ?  $_POST['CreditCardExpYear'] : '';
+    $_SESSION['cvv2'] = isset($_POST['CreditCardSecurityCode']) ? $_POST['CreditCardSecurityCode'] : '';
+
+    // Check to see if they manually enter in billing information
+    if (isset($_POST['billingInfo']) && $_POST['billingInfo'] == 'true'){
+        $_SESSION['billing_first_name'] = $_POST['BillingFirstName'];
+        $_SESSION['billing_last_name'] = $_POST['BillingLastName'];
+        $_SESSION['billing_street1'] = $_POST['BillingStreet'];
+        $_SESSION['billing_street2'] = $_POST['BillingStreet2'];
+        $_SESSION['billing_city'] = $_POST['BillingCity'];
+        $_SESSION['billing_state'] = $_POST['BillingState'];
+        $_SESSION['billing_postal_code'] = $_POST['BillingPostalCode'];
+        $_SESSION['billing_country_code'] = $_POST['BillingCountryCode'];
+        $_SESSION['billing_phone'] = $_POST['BillingPhoneNumber'];
+        $_SESSION['billing_email'] = $_POST['BillingEmail'];
+    } else {
+        $_SESSION['billing_first_name'] = $_POST['BillingFirstName'];
+        $_SESSION['billing_last_name'] = $_POST['BillingLastName'];
+        $_SESSION['billing_street1'] = '123 N/A';
+        $_SESSION['billing_street2'] = '';
+        $_SESSION['billing_city'] = 'NA';
+        $_SESSION['billing_state'] = 'NA';
+        $_SESSION['billing_postal_code'] = '00000';
+        $_SESSION['billing_country_code'] = 'US';
+        $_SESSION['billing_phone'] = '';
+        $_SESSION['billing_email'] = '';
+    }
+
+    // If Shipping is different then billing
+    if (!isset($_POST['shippingDisabled']) && !isset($_POST['shippingSameAsBilling']))
+    {
+        $_SESSION['shipping_first_name'] = isset($_POST['ShippingFirstName']) ? $_POST['ShippingFirstName'] : '';
+        $_SESSION['shipping_last_name'] = isset($_POST['ShippingLastName']) ? $_POST['ShippingLastName'] : '';
+        $_SESSION['shipping_phone'] = isset($_POST['ShippingPhoneNumber']) ? $_POST['ShippingPhoneNumber'] : '';
+        $_SESSION['shipping_email'] = isset($_POST['ShippingEmail']) ? $_POST['ShippingEmail'] : '';
+        $_SESSION['shipping_street1'] = isset($_POST['ShippingStreet']) ? $_POST['ShippingStreet'] : '';
+        $_SESSION['shipping_street2'] = isset($_POST['ShippingStreet2']) ? $_POST['ShippingStreet2'] : '';
+        $_SESSION['shipping_city'] = isset($_POST['ShippingCity']) ? $_POST['ShippingCity'] : '';
+        $_SESSION['shipping_state'] = isset($_POST['ShippingState']) ? $_POST['ShippingState'] : '';
+        $_SESSION['shipping_postal_code'] = isset($_POST['ShippingPostalCode']) ? $_POST['ShippingPostalCode'] : '';
+        $_SESSION['shipping_country_code'] = isset($_POST['ShippingCountryCode']) ? $_POST['ShippingCountryCode'] : '';
+    }
+    else
+    {
+        $_SESSION['shipping_first_name'] = isset($_SESSION['billing_first_name']) ? $_SESSION['billing_first_name'] : '';
+        $_SESSION['shipping_last_name'] = isset($_SESSION['billing_last_name']) ? $_SESSION['billing_last_name'] : '';
+        $_SESSION['shipping_phone'] = isset($_SESSION['billing_phone']) ? $_SESSION['billing_phone'] : '';
+        $_SESSION['shipping_email'] = isset($_SESSION['billing_email']) ? $_SESSION['billing_email'] : '';
+        $_SESSION['shipping_street1'] = isset($_SESSION['billing_street1']) ? $_SESSION['billing_street1'] : '';
+        $_SESSION['shipping_street2'] = isset($_SESSION['billing_street2']) ? $_SESSION['billing_street2'] : '';
+        $_SESSION['shipping_city'] = isset($_SESSION['billing_city']) ? $_SESSION['billing_city'] : '';
+        $_SESSION['shipping_state'] = isset($_SESSION['billing_state']) ? $_SESSION['billing_state'] : '';
+        $_SESSION['shipping_postal_code'] = isset($_SESSION['billing_postal_code']) ? $_SESSION['billing_postal_code'] : '';
+        $_SESSION['shipping_country_code'] = isset($_SESSION['billing_country_code']) ? $_SESSION['billing_country_code'] : '';
+    }
+
+    $_SESSION['amount'] = isset($_POST['GrandTotal']) ? $_POST['GrandTotal'] : '0.00';
+    $_SESSION['subtotal'] = isset($_POST['NetAmount']) ? $_POST['NetAmount'] : '0.00';
+    $_SESSION['shipping_amount'] = ( isset($_POST['ShippingAmount']) && $_POST['ShippingAmount'] != '') ? $_POST['ShippingAmount'] : '0.00';
+    $_SESSION['handling_amount'] = ( isset($_POST['HandlingAmount']) && $_POST['HandlingAmount'] != '') ? $_POST['HandlingAmount'] : '0.00';
+    $_SESSION['tax_amount'] = ( isset($_POST['TaxAmount']) && $_POST['TaxAmount'] != '') ? $_POST['TaxAmount'] : '0.00';
+    $_SESSION['billingInfo'] = isset($_POST['billingInfo']) ? $_POST['billingInfo'] : array();
+    $_SESSION['shippingInfo'] = isset($_POST['shippingInfo']) ? $_POST['shippingInfo'] : array();
+
+    ##########[ Create Payment ]############
+    // Create new PayPal Api Context
+    $paypal_rest = new \PayPal\Rest\ApiContext(new \PayPal\Auth\OAuthTokenCredential(
+        $config['RESTAPIClient_Id'],
+        $config['RESTAPIClient_Secret']));
+
+    $addr = new \PayPal\Api\Address();
+    $addr->setLine1($_SESSION['billing_street1']);
+    $addr->setLine2($_SESSION['billing_street2']);
+    $addr->setCity($_SESSION['billing_city']);
+    $addr->setCountryCode($_SESSION['billing_country_code']);
+    $addr->setPostalCode($_SESSION['billing_postal_code']);
+    $addr->setState($_SESSION['billing_state']);
+
+    $card = new \PayPal\Api\CreditCard();
+    $card->setNumber($_SESSION['cc_number']);
+    $card->setType(strtolower($_SESSION['cc_type']));
+    $card->setExpireMonth($_SESSION['cc_exp_month']);
+    $card->setExpireYear($_SESSION['cc_exp_year']);
+    $card->setCvv2($_SESSION['cvv2']);
+    $card->setFirstName($_SESSION['billing_first_name']);
+    $card->setLastName($_SESSION['billing_last_name']);
+    $card->setBillingAddress($addr);
+
+    $fi = new \PayPal\Api\FundingInstrument();
+    $fi->setCreditCard($card);
+
+    $payer = new \PayPal\Api\Payer();
+    $payer->setPaymentMethod('credit_card');
+    $payer->setFundingInstruments(array($fi));
+
+    $amountDetails = new \PayPal\Api\Details();
+    $amountDetails->setSubtotal(str_replace(",","", number_format($_SESSION['subtotal'],2)));
+    $amountDetails->setTax(str_replace(",","", number_format($_SESSION['tax_amount'],2)) );
+    $amountDetails->setShipping(str_replace(",","", number_format($_SESSION['shipping_amount'],2)));
+
+    $amount = new \PayPal\Api\Amount();
+    $amount->setCurrency(isset($config['CurrencyCode']) ? $config['CurrencyCode'] : 'USD');
+    $amount->setTotal(str_replace(",","", number_format($_SESSION['amount'],2)));
+    $amount->setDetails($amountDetails);
+
+    $transaction = new \PayPal\Api\Transaction();
+    $transaction->setAmount($amount);
+    $transaction->setDescription('PayPal Payments Pro Virtual Terminal Sale');
+
+    $payment = new \PayPal\Api\Payment();
+    $payment->setIntent(strtolower($_SESSION['transaction_type']));
+    $payment->setPayer($payer);
+    $payment->setTransactions(array($transaction));
+
+    try {
+        $payment->create($paypal_rest);
+    } catch (PayPal\Exception\PayPalConnectionException $ex) {
+        $PayPalErrors = json_decode($ex->getData());
+
+        $result_data_html = '<ul>';
+        foreach($PayPalErrors->details as $error)
+        {
+            $result_data_html .= '<li><strong>ERROR</strong>&nbsp;' . $error->issue . '</li>';
+        }
+        $result_data_html .= '</ul>';
+        echo json_encode(array('result' => 'error', 'result_data' => $result_data_html));
+        exit(1);
+    }
+
+    $_SESSION['transaction_id'] = $payment->getId();
+    $_SESSION['created'] = $payment->getCreateTime();
+    $_SESSION['state'] = $payment->getState();
+
+    $returnData = array(
+        'Transaction_ID' => $_SESSION['transaction_id'],
+        'Created' => $_SESSION['created'],
+        'State' => $_SESSION['state']
+    );
+
+    $returnHtml = '<h3>Payment Details</h3>';
+    $returnHtml .= '<table class="table-responsive table-striped">';
+    foreach ($returnData as $k => $v) {
+        $returnHtml .= '<tr><th>' . str_replace("_", " ", $k) . '</th><td>' . str_replace("_", " ", $v) . '</td></tr>';
+    }
+    $returnHtml .= '</table>';
+    $returnHtml .= '<hr>';
+    $returnHtml .= '<pre>'.$payment.'</pre>';
+
+    echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
+    exit;
 }
 else
 {
