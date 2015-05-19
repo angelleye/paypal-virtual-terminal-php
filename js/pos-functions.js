@@ -171,7 +171,7 @@ function checkItem(e)
 
     if (code==13)
     {
-        if(document.activeElement.name == 'CreditCardExpYear')
+        if(document.activeElement.name == 'swiper')
         {
             $('#CreditCardSecurityCode').focus();
         }
