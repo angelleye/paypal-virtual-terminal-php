@@ -101,7 +101,7 @@ require_once('../includes/config.php');
                         <li><a href="instructions-modal.html?v=1" data-toggle="modal" data-target="#posInstructionsModal"><i class="fa fa-info-circle fa-fw"></i> Help/About</a>
                         </li>
                         <li>
-                            <a href="http://angelleye.com" target="_blank"><i class="fa fa-paypal fa-fw"></i> Donate</a>
+                            <a href="http://angelleye.com" target="_blank"><i class="fa fa-gift fa-fw"></i> Donate</a>
                         </li>
                     </ul>
                     <!-- /.dropdown-user -->
@@ -119,6 +119,9 @@ require_once('../includes/config.php');
                         </li>
                         <li>
                             <a href="intro.html"><i class="fa fa-info-circle fa-fw"></i> Instructions</a>
+                        </li>
+                        <li>
+                            <a href="http://angelleye.com" target="_blank"><i class="fa fa-gift fa-fw"></i> Donate</a>
                         </li>
                     </ul>
                 </div>
