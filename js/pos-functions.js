@@ -5,6 +5,16 @@ $(function() {
         /* Auto hide Card Issue Number field div */
         $('#DivCreditCardIssueNumber').hide();
 
+        /* Auto focus on swipe field if present */
+        if($('#pos-panel-swipe').length > 0)
+        {
+            $('#swiper').focus();
+        }
+        else
+        {
+            $('#BillingFirstName').focus();
+        }
+
         /* Bootstrap Switch Plugin on checkboxes for POS form */
         if($('#ae-paypal-pos-form').html().length != 0)
         {
@@ -163,7 +173,7 @@ function checkItem(e)
     {
         if(document.activeElement.name == 'CreditCardExpYear')
         {
-            document.getElementById('CreditCardSecurityCode').focus();
+            $('#CreditCardSecurityCode').focus();
         }
         return false;
     }
