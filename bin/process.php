@@ -534,7 +534,26 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
 
     try {
         $payment->create($paypal_rest);
-    } catch (PayPal\Exception\PayPalConnectionException $ex) {
+
+        if($payment->getState() == 'approved'){
+            $_SESSION['transaction_id'] = $payment->getId();
+            $_SESSION['created'] = $payment->getCreateTime();
+            $_SESSION['state'] = $payment->getState();
+
+            $returnData = array(
+                'Transaction_ID' => $_SESSION['transaction_id'],
+                'Created' => $_SESSION['created'],
+                'State' => $_SESSION['state']
+            );
+        }
+        else
+        {
+            $_SESSION['state'] = $payment->getState();
+            $result_data_html = $_SESSION['state'];
+            echo json_encode(array('result' => 'error', 'result_data' => $result_data_html));
+            exit;
+        }
+    } catch (Exception $ex) {
         $PayPalErrors = json_decode($ex->getData());
 
         $result_data_html = '<ul>';
@@ -544,18 +563,8 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         }
         $result_data_html .= '</ul>';
         echo json_encode(array('result' => 'error', 'result_data' => $result_data_html));
-        exit(1);
+        exit;
     }
-
-    $_SESSION['transaction_id'] = $payment->getId();
-    $_SESSION['created'] = $payment->getCreateTime();
-    $_SESSION['state'] = $payment->getState();
-
-    $returnData = array(
-        'Transaction_ID' => $_SESSION['transaction_id'],
-        'Created' => $_SESSION['created'],
-        'State' => $_SESSION['state']
-    );
 
     $returnHtml = '<h3>Payment Details</h3>';
     $returnHtml .= '<table class="table-responsive table-striped">';
