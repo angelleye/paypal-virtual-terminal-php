@@ -13,6 +13,12 @@ $config = array();
  */
 $config['Sandbox'] = TRUE;
 
+/**
+ * API selection
+ * 'PayPalPro, PayFlow, Rest'
+ */
+$config['ApiSelection'] = 'Rest';
+
 /*
  * PayPal API Version
  * ------------------
@@ -122,10 +128,11 @@ $config['CurrencyCode'] = 'USD';
 $config['ShowNavMenuLeft'] = TRUE;
 
 /**
- * API selection
- * 'PayPalPro, PayFlow, Rest'
+ * Show swipe field on pos form
+ * TRUE == Show, FALSE == HIDE
  */
-$config['ApiSelection'] = 'Rest';
+$config['ShowSwipeField'] = FALSE;
+
 
 /* End of file config.php */
 /* Location: ./includes/config.php */

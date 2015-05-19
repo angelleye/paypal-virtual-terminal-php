@@ -144,6 +144,7 @@ require_once('../includes/config.php');
                             <div class="row">
                                 <div class="col-lg-12">
 
+                                    <?php if( isset($config['ShowSwipeField']) && $config['ShowSwipeField']) { ?>
                                     <!-- Swipe Card -->
                                     <div class="panel panel-default" id="pos-panel-swipe">
                                         <div class="panel-heading text-uppercase">Swipe Card</div>
@@ -157,6 +158,7 @@ require_once('../includes/config.php');
                                             </div>
                                         </div>
                                     </div>
+                                    <?php } ?>
 
                                     <!-- Card Info -->
                                     <div class="panel panel-default" id="pos-panel-card-info">
