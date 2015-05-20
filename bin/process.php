@@ -563,9 +563,36 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $PayPalErrors = json_decode($ex->getData());
 
         $result_data_html = '<ul>';
-        foreach($PayPalErrors->details as $error)
+        if(isset($PayPalErrors->name))
         {
-            $result_data_html .= '<li><strong>ERROR</strong>&nbsp;' . $error->issue . '</li>';
+            $result_data_html .= '<li><strong>Error: </strong>&nbsp;' . $PayPalErrors->name . '</li>';
+        }
+        if(isset($PayPalErrors->message))
+        {
+            $result_data_html .= '<li><strong>Message: </strong>&nbsp;' . $PayPalErrors->message . '</li>';
+        }
+        if(isset($PayPalErrors->details))
+        {
+            $result_data_html .= '<li><strong>Details: </strong><ul>';
+            foreach($PayPalErrors->details as $error_details) {
+                if(isset($error_details->field))
+                {
+                    $result_data_html .= '<li><strong>Field: </strong>&nbsp;' . $error_details->field . '</li>';
+                }
+                if(isset($error_details->issue))
+                {
+                    $result_data_html .= '<li><strong>Issue: </strong>&nbsp;' . $error_details->issue . '</li>';
+                }
+            }
+            $result_data_html .= '</ul></li>';
+        }
+        if(isset($PayPalErrors->information_link))
+        {
+            $result_data_html .= '<li><strong>Information Link: </strong>&nbsp;' . $PayPalErrors->information_link . '</li>';
+        }
+        if(isset($PayPalErrors->debug_id))
+        {
+            $result_data_html .= '<li><strong>Debug Id: </strong>&nbsp;' . $PayPalErrors->debug_id . '</li>';
         }
         $result_data_html .= '</ul>';
         echo json_encode(array('result' => 'error', 'result_data' => $result_data_html));
