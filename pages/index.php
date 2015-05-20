@@ -744,7 +744,7 @@ require_once('../includes/config.php');
                                                 <div class="form-group">
                                                     <label class="col-lg-3 col-sm-4 control-label" for="BillingEmail">Email Address</label>
                                                     <div class="col-lg-6 col-sm-8">
-                                                        <input type="text" class="form-control" name="BillingEmail" id="BillingEmail" maxlength="25" />
+                                                        <input type="email" class="form-control" name="BillingEmail" id="BillingEmail" maxlength="25" />
                                                     </div>
                                                 </div>
                                             </div><!-- / Billing Address Fields -->
@@ -1163,7 +1163,7 @@ require_once('../includes/config.php');
                                                 <div class="form-group">
                                                     <label class="col-lg-3 col-sm-4 control-label" for="ShippingEmail">Email Address</label>
                                                     <div class="col-lg-6 col-sm-8">
-                                                        <input type="text" class="form-control" name="ShippingEmail" id="ShippingEmail" maxlength="25" />
+                                                        <input type="email" class="form-control" name="ShippingEmail" id="ShippingEmail" maxlength="25" />
                                                     </div>
                                                 </div>
 
