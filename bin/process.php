@@ -9,7 +9,7 @@
 require_once('../includes/config.php');
 require_once('../vendor/autoload.php');
 
-if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'paypalpro'))
+if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'paypalpro-ddp'))
 {
     /**
      * PayPalPro API
@@ -205,7 +205,7 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
     exit;
 }
-elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'payflow'))
+elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'paypalpro-payflow'))
 {
     /**
      * PayFlow API
@@ -405,7 +405,7 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
     exit;
 }
-elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'rest'))
+elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'paypal-rest'))
 {
     /**
      * REST API

@@ -15,9 +15,9 @@ $config['Sandbox'] = TRUE;
 
 /**
  * API selection
- * 'PayPalPro, PayFlow, Rest'
+ * 'PayPalPro-DDP, PayPalPro-PayFlow, PayPal-Rest'
  */
-$config['ApiSelection'] = 'Rest';
+$config['ApiSelection'] = 'PayPal-Rest';
 
 /*
  * PayPal API Version
@@ -65,31 +65,6 @@ $config['PayFlowPartner'] = $config['Sandbox'] ? 'PayPal' : 'PayPal';
  */
 $config['RESTAPIClient_Id'] = $config['Sandbox'] ? 'AbWX5DtTNUferjgDtrQfRQjqZIOnK25idCvaPH-R-VUpJZMHFG83LPU_o3-5d32dpnO2oVydlzIHjBRX' : '';
 $config['RESTAPIClient_Secret'] = $config['Sandbox'] ? 'EBn7ARTYLux062X74_hFl_wKkSJMpq69oaVWTMRWWvH9QNt_JMjJ8G0rGczEB86skZf90goieMOQA0Qu' : '';
-
-/*
- * PayPal Application ID
- * --------------------------------------
- * The application is only required with Adaptive Payments applications.
- * You obtain your application ID but submitting it for approval within your
- * developer account at http://developer.paypal.com
- *
- * We're using shorthand if/else statements here to set both Sandbox and Production values.
- * Your sandbox values go on the left and your live values go on the right.
- * The sandbox value included here is a global value provided for developrs to use in the PayPal sandbox.
- */
-$config['ApplicationID'] = $config['Sandbox'] ? 'APP-80W284485P519543T' : 'PRODUCTION_APP_ID_GOES_HERE';
-
-/*
- * PayPal Developer Account Email Address
- * This is the email address that you use to sign in to http://developer.paypal.com
- */
-$config['DeveloperEmailAccount'] = 'some@email.com';
-
-/**
- * Third Party User Values
- * These can be setup here or within each caller directly when setting up the PayPal object.
- */
-$config['DeviceID'] = 'DEVICE_ID_GOES_HERE';
 
 /**
  * Set Domain
