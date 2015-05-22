@@ -151,6 +151,7 @@ $('input').keydown( function(e) {
             var inputs = $(this).closest('form').find(':input:visible');
             inputs.eq( inputs.index(this)+ 1 ).focus();
         }
+        return false;
     }
 });
 
