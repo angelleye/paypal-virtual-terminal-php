@@ -138,48 +138,28 @@ $(function() {
     });
 });
 
-function DisableEnterKey(e)
-{
-    var key;
-    if(window.event)
-        key = window.event.keyCode; //IE
-    else
-        key = e.which; //firefox
-
-    return (key != 13);
-}
-
-function checkItem(e)
-{
-    if (window.event)
-    {
-        if (event.keyCode==13) //trap enter
-        {
-            //if not textarea type
-            if(document.activeElement.type!='textarea')
-            {
-                event.keyCode=9;
-            } //convert to Tab key
-        }
-        return event.keyCode;
-    }
-
-    if (e.keyCode)
-        code = e.keyCode;
-    else if (e.which)
-        code = e.which;
-
-    if (code==13)
-    {
+$('input').keydown( function(e) {
+    var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+    if(key == 13) {
+        e.preventDefault();
         if(document.activeElement.name == 'swiper')
         {
             $('#CreditCardSecurityCode').focus();
         }
-        return false;
+        else
+        {
+            var inputs = $(this).closest('form').find(':input:visible');
+            inputs.eq( inputs.index(this)+ 1 ).focus();
+        }
     }
-}
+});
 
-document.onkeydown=checkItem;
+$('#Notes').keydown( function(e) {
+    var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
+    if (key == 13) {
+        e.preventDefault();
+    }
+});
 
 /* Validate Credit Card Number field */
 function ValidateCreditCardNumber()
