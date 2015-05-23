@@ -1,168 +1,195 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="">
+<meta name="author" content="">
+<title>PayPal PHP Virtual Terminal POS</title>
 
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
+<!-- Bootstrap Core CSS -->
+<link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
 
-    <title>PayPal PHP Virtual Terminal POS</title>
+<!-- MetisMenu CSS -->
+<link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
 
-    <!-- Bootstrap Core CSS -->
-    <link href="../bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="../dist/css/sb-admin-2.css" rel="stylesheet">
 
-    <!-- MetisMenu CSS -->
-    <link href="../bower_components/metisMenu/dist/metisMenu.min.css" rel="stylesheet">
+<!-- Custom CSS -->
+<link href="../css/ae-paypal-php-pos.css" rel="stylesheet">
 
-    <!-- Custom CSS -->
-    <link href="../dist/css/sb-admin-2.css" rel="stylesheet">
+<!-- Custom Fonts -->
+<link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 
-    <!-- Custom CSS -->
-    <link href="../css/ae-paypal-php-pos.css" rel="stylesheet">
-
-    <!-- Custom Fonts -->
-    <link href="../bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
-
-    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-    <!--[if lt IE 9]>
+<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+<!--[if lt IE 9]>
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
 
-    <link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
-
+<link rel="shortcut icon" type="image/x-icon" href="../images/favicon.ico">
 </head>
 
 <body>
 
-    <!-- Modal HTML -->
-    <div id="posInstructionsModal" class="modal fade">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <!-- Content will be loaded here from "remote.php" file -->
-            </div>
-        </div>
+<!-- Modal HTML -->
+<div id="posInstructionsModal" class="modal fade">
+  <div class="modal-dialog">
+    <div class="modal-content"> 
+      <!-- Content will be loaded here from "remote.php" file --> 
     </div>
-
-    <div id="wrapper">
-
-        <!-- Navigation -->
-        <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
-            <div class="navbar-header">
-                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                    <span class="sr-only">Toggle navigation</span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                    <span class="icon-bar"></span>
-                </button>
-                <a class="navbar-brand" href="index.php">PayPal PHP Virtual Terminal POS</a>
-            </div>
-            <!-- /.navbar-header -->
-
-            <ul class="nav navbar-top-links navbar-right">
-                <!-- /.dropdown -->
-                <li class="dropdown">
-                    <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                        <i class="fa fa-bars fa-fw text-secondary"></i>  <i class="fa fa-caret-down text-secondary"></i>
-                    </a>
-                    <ul class="dropdown-menu dropdown-user">
-                        <li><a href="instructions-modal.html?v=1" data-toggle="modal" data-target="#posInstructionsModal"><i class="fa fa-info-circle fa-fw"></i> Help/About</a>
-                        </li>
-                        <li>
-                            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPHP4UKDUTZYS" target="_blank"><i class="fa fa-gift fa-fw"></i> Donate</a>
-                        </li>
-                    </ul>
-                    <!-- /.dropdown-user -->
+  </div>
+</div>
+<div id="wrapper"> 
+  
+  <!-- Navigation -->
+  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <a class="navbar-brand" href="index.php">PayPal PHP Virtual Terminal POS</a> </div>
+    <!-- /.navbar-header -->
+    
+    <ul class="nav navbar-top-links navbar-right">
+      <!-- /.dropdown -->
+      <li class="dropdown"> <a class="dropdown-toggle" data-toggle="dropdown" href="#"> <i class="fa fa-bars fa-fw text-secondary"></i> <i class="fa fa-caret-down text-secondary"></i> </a>
+        <ul class="dropdown-menu dropdown-user">
+          <li><a href="instructions-modal.html?v=1" data-toggle="modal" data-target="#posInstructionsModal"><i class="fa fa-info-circle fa-fw"></i> Help/About</a> </li>
+          <li> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPHP4UKDUTZYS" target="_blank"><i class="fa fa-gift fa-fw"></i> Donate</a> </li>
+        </ul>
+        <!-- /.dropdown-user --> 
+      </li>
+      <!-- /.dropdown -->
+    </ul>
+    <!-- /.navbar-top-links -->
+    
+    <div class="navbar-default sidebar" role="navigation">
+      <div class="sidebar-nav navbar-collapse">
+        <ul class="nav" id="side-menu">
+          <li> <a href="index.php"><i class="fa fa-paypal fa-fw"></i> Virtual Terminal</a> </li>
+          <li> <a href="intro.html"><i class="fa fa-info-circle fa-fw"></i> Instructions</a> </li>
+          <li> <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPHP4UKDUTZYS" target="_blank"><i class="fa fa-gift fa-fw"></i> Donate</a> </li>
+        </ul>
+      </div>
+      <!-- /.sidebar-collapse --> 
+    </div>
+    <!-- /.navbar-static-side --> 
+  </nav>
+  
+  <!-- Page Content -->
+  <div id="page-wrapper">
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-lg-12">
+          <h1 class="page-header">Instructions</h1>
+          
+          <!-- Nav tabs -->
+          <ul class="nav nav-tabs">
+            <li class="active"><a href="#help-install" data-toggle="tab"> Setup</a> </li>
+            <li><a href="#help-virtual-terminal" data-toggle="tab">Virtual Terminal</a> </li>
+            <li><a href="#help-support" data-toggle="tab">Support</a> </li>
+          </ul>
+          
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade in active" id="help-install">
+              <h3>Configuration</h3>
+              <ol>
+                <li>Open /includes/config-sample.php and save it as config.php.</li>
+                <li>Set $config['Sandbox'] to TRUE if you wish to run test transactions against the PayPal sandbox. If you are ready to process live transactions, set this to FALSE.</li>
+                <li>Set $config['ApiSelection'] to the value which represents the API platform you will be using with your PayPal account.  Valid values are:
+                  <ol>
+                    <li>PayPalPro-DDP = PayPal Website Payments Pro 3.0 (DoDirectPayment)</li>
+                    <li>PayPalPro-PayFlow = PayPal Payments Pro 1.5 / 2.0 (PayFlow Gatway)</li>
+                    <li>PayPal-Rest = PayPal REST API</li>
+                  </ol>
                 </li>
-                <!-- /.dropdown -->
-            </ul>
-            <!-- /.navbar-top-links -->
-
-            <div class="navbar-default sidebar" role="navigation">
-                <div class="sidebar-nav navbar-collapse">
-                    <ul class="nav" id="side-menu">
-                        <li>
-                            <a href="index.php"><i class="fa fa-paypal fa-fw"></i> Virtual Terminal</a>
-                        </li>
-                        <li>
-                            <a href="intro.html"><i class="fa fa-info-circle fa-fw"></i> Instructions</a>
-                        </li>
-                        <li>
-                            <a href="https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=PPHP4UKDUTZYS" target="_blank"><i class="fa fa-gift fa-fw"></i> Donate</a>
-                        </li>
-                    </ul>
-                </div>
-                <!-- /.sidebar-collapse -->
+                <li>Scroll down to the section of the config file where you enter the API credentials for the platform that you specified in step 3. Then enter your API credentials into the correct location. Be sure to enter sandbox credentials and live credentials into their correct placeholders!</li>
+                <li>Adjust any other optional settings in the config file to suit your needs.</li>
+              </ol>
+              <h3>USBSwiper Credit Card Reader</h3>
+              <div style="width:200px; height:138px; float:left; margin-right:7px;"><a href="https://www.usbswiper.com/usbswiper-usb-magnetic-stripe-credit-card-reader.html?utm_source=angelleye&utm_medium=paypal_pos&utm_campaign=setup_guide" target="_blank"><img src="../images/usbswiper-usb-credit-card-reader.png" width="200" height="138" alt="USBSwiper USB Credit Card Reader"></a></div>
+              <div style="float:left; margin-top:10px;">
+                <p>If you would like to swipe credit cards and have all of the card data entered automatically for you to save time you will need a <a href="https://www.usbswiper.com/usbswiper-usb-magnetic-stripe-credit-card-reader.html?utm_source=angelleye&utm_medium=paypal_pos&utm_campaign=setup_guide" target="_blank">USB credit card reader</a>.</p>
+                <p>Any reader that is configured as keyboard emulation and reads both track 1 and track 2 of the credit card stripe will work.</p>
+                <p>We recommend purchasing one from our partner <a href="https://www.usbswiper.com/usbswiper-usb-magnetic-stripe-credit-card-reader.html?utm_source=angelleye&utm_medium=paypal_pos&utm_campaign=setup_guide" target="_blank">USBSwiper</a> if you do not already have one. The solution has been fully tested with USBSwiper card readers.</p>
+              </div>
             </div>
-            <!-- /.navbar-static-side -->
-        </nav>
-
-        <!-- Page Content -->
-        <div id="page-wrapper">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-lg-12">
-                        <h1 class="page-header">Instructions</h1>
-
-                        <!-- Nav tabs -->
-                        <ul class="nav nav-tabs">
-                            <li class="active"><a href="#help-install" data-toggle="tab">Installation</a>
-                            </li>
-                            <li><a href="#help-virtual-terminal" data-toggle="tab">Virtual Terminal</a>
-                            </li>
-                            <li><a href="#help-credits" data-toggle="tab">Credits</a>
-                            </li>
-                        </ul>
-
-                        <!-- Tab content -->
-                        <div class="tab-content">
-                            <div class="tab-pane fade in active" id="help-install">
-                                <h3>Upload</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <h3>Setup Configuration</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            </div>
-                            <div class="tab-pane fade" id="help-virtual-terminal">
-                                <h3>Required Fields</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <h3>Card Types</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                                <h3>PayPal Errors</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            </div>
-                            <div class="tab-pane fade" id="help-credits">
-                                <h3>Built with love by Angelleye</h3>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- /.col-lg-12 -->
-                </div>
-                <!-- /.row -->
+            <div class="tab-pane fade" id="help-virtual-terminal">
+              <h3>Basic Usage</h3>
+              <p>
+              <h5>Credit / Debit Card Info</h5>
+              <ol>
+                <li>If you are using a <a href="https://www.usbswiper.com/usbswiper-usb-magnetic-stripe-credit-card-reader.html?utm_source=angelleye&utm_medium=paypal_pos&utm_campaign=setup_guide" target="_blank">credit card reader</a>, swipe the card with the cursor located in the swipe field at the top of the form. Otherwise, type all credit card details into their proper fields.</li>
+                <li>Choose a Transaction Type:
+                  <ol>
+                    <li>Sale - Process the payment and immediately move funds into the PayPal account.</li>
+                    <li>Auth - Authorize the credit card, but do not process the funds immediately. To capture the funds later and finalize the transaction you will need to log into your PayPal account, find the transaction, and click the capture button within the transaction details.</li>
+                  </ol>
+                </li>
+              </ol>
+              <h5>Payment Info</h5>
+              <ol>
+                <li>Enter your order totals including the net amount and optional shipping, handling, and tax details.</li>
+                <li>Enter an invoice number for your records (optional).</li>
+                <li>Enter an item name and any notes you would like to associate with the order.</li>
+              </ol>
+              <h5>Billing Address</h5>
+              <ol>
+                <li>Set the &quot;Enter Billing Address&quot; switch to ON if you would like to include a billing address.</li>
+                <li>Enter the billing address of the credit card into the corresponding fields.</li>
+              </ol>
+              <h5>Shipping Address</h5>
+              <ol>
+                <li>If you do not need to include shipping on the order, simply set the &quot;Shipping Not Req.&quot; switch to ON.</li>
+                <li>If you would like to use the same address for shipping that is entered for billing, set the &quot;Same as Billing&quot; switch to ON.</li>
+                <li>If the shipping address will be different, enter the address into the corresponding fields.</li>
+              </ol>
+              <h5>Process Payment</h5>
+              <ol>
+                <li>Click the &quot;Process Payment&quot; button to submit the transaction to PayPal.</li>
+              </ol>
+              </p>
+              <h3>Required Fields</h3>
+              <p>The billing address may or may not be required by PayPal depending on how your account was vetted when you were approved to process credit cards and/or how you have your Fraud Management Filters (Risk Controls) configured in your PayPal account.</p>
+              <h3>Supported Credit Card Types</h3>
+              <p><ul>Visa</ul><ul>MasterCard</ul><ul>Discover</ul><ul>American Express</ul><ul>JCB</ul><ul>Maestro</ul></p>
+              <h3>PayPal Errors</h3>
+              <p>Refer to <a href="https://developer.paypal.com/docs/classic/api/errorcodes/" target="_blank">PayPal's API error documentation</a> for more details on specific error codes you might see.</p>
             </div>
-            <!-- /.container-fluid -->
+            <div class="tab-pane fade" id="help-support">
+              <h3>Community Support</h3>
+              <p>Get answers directly from Angell EYE support as well as community users in our <a href="http://www.angelleye.com/forum/categories/paypal-pos-virtual-terminal" target="_blank">PayPal POS Virtual Terminal forum</a>.</p>
+              <h3>Premium Support</h3>
+              <p>If you need more direct help or cannot wait on answers from the community you may <a href="https://www.angelleye.com/product/premium-support/" target="_blank">submit an order for premium support</a>.</p>
+              <h3>GitHub Repo</h3>
+              <p>If you would like to submit bug reports, feature requests, or contribute to the solution you may <a href="https://github.com/angelleye/paypal-pos" target="_blank">follow our GitHub repo</a>.</p>
+            </div>
+          </div>
         </div>
-        <!-- /#page-wrapper -->
-
+        <!-- /.col-lg-12 --> 
+      </div>
+      <!-- /.row --> 
     </div>
-    <!-- /#wrapper -->
+    <!-- /.container-fluid --> 
+  </div>
+  <!-- /#page-wrapper --> 
+  
+</div>
+<!-- /#wrapper --> 
 
-    <!-- jQuery -->
-    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+<!-- jQuery --> 
+<script src="../bower_components/jquery/dist/jquery.min.js"></script> 
 
-    <!-- Bootstrap Core JavaScript -->
-    <script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
+<!-- Bootstrap Core JavaScript --> 
+<script src="../bower_components/bootstrap/dist/js/bootstrap.min.js"></script> 
 
-    <!-- Metis Menu Plugin JavaScript -->
-    <script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script>
+<!-- Metis Menu Plugin JavaScript --> 
+<script src="../bower_components/metisMenu/dist/metisMenu.min.js"></script> 
 
-    <!-- Custom Theme JavaScript -->
-    <script src="../dist/js/sb-admin-2.js"></script>
-
+<!-- Custom Theme JavaScript --> 
+<script src="../dist/js/sb-admin-2.js"></script>
 </body>
-
 </html>
