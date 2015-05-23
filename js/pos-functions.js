@@ -144,7 +144,7 @@ document.onkeydown = function(e) {
         e.preventDefault();
         if(document.activeElement.name == 'swiper' && $('#swiper').val() != '')
         {
-            $('#CreditCardSecurityCode').focus();
+            BlurStripeField();
         }
         else
         {
@@ -179,7 +179,7 @@ function ClearStripeData() {
 
 /* Blur swipe field */
 function BlurStripeField() {
-    if($(this).val() != '')
+    if($('#swiper').val() != '')
     {
         $('#CreditCardSecurityCode').focus();
         ClearStripeData();
