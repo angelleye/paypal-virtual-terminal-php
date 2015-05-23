@@ -138,7 +138,7 @@ $(function() {
     });
 });
 
-$('input').keydown( function(e) {
+document.onkeydown = function(e) {
     var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
     if(key == 13) {
         e.preventDefault();
@@ -153,7 +153,7 @@ $('input').keydown( function(e) {
         }
         return false;
     }
-});
+};
 
 $('#Notes').keydown( function(e) {
     var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
