@@ -38,6 +38,9 @@ $(function() {
                 $('html, body').animate({
                     scrollTop: $('.has-error:first').offset().top - 20
                 }, '400');
+
+                // focus first error input
+                $('.has-error:first').find(':input').focus();
             })
             .on('change', '[name="CreditCardType"]', function(e) {
                 var cardNumberVal = $('#CreditCardNumber').val();
