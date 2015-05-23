@@ -92,7 +92,7 @@ $config['PayFlowPartner'] = $config['Sandbox'] ? 'PayPal' : 'LIVE_PARTNER_GOES_H
  * We're using shorthand if/else statements here to set both Sandbox and Production values.
  * Your sandbox values go on the left and your live values go on the right.
  */
-$config['RESTAPIClient_Id'] = $config['Sandbox'] ? 'AbWX5DtTNUferjgDtrQfRQjqZIOnK25idCvaPH-R-VUpJZMHFG83LPU_o3-5d32dpnO2oVydlzIHjBRX' : 'LIVE_CLIENT_ID_GOES_HERE';
+$config['RESTAPIClient_Id'] = $config['Sandbox'] ? 'AVQxQU6OWugLPdiMZ3nXGlmwOyjjVwOHY51QFN9Uy9o6A94mnFQBwm0paLLs4-RnBfHcWQUbhCaEAKn_' : 'LIVE_CLIENT_ID_GOES_HERE';
 $config['RESTAPIClient_Secret'] = $config['Sandbox'] ? 'EBn7ARTYLux062X74_hFl_wKkSJMpq69oaVWTMRWWvH9QNt_JMjJ8G0rGczEB86skZf90goieMOQA0Qu' : 'LIVE_CLIENT_SECRET_GOES_HERE';
 
 /**
