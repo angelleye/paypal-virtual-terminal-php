@@ -1,20 +1,2 @@
-1) Copy all solution files to a directory on your web server (eg. www.domain.com/pos/)
-
-2) Open /includes/config-sample.php and adjust the following with your own values.  Then save-as config.php.
-
-	- date_default_timezone_set()	
-	- $sandbox
-	- $domain
-	- $api_username
-	- $api_password
-	- $api_signature
-
-	- Sandbox API credentials can be obtained from your developer account
-	  at http://developer.paypal.com
-
-	- Live API credentials can be obtained from your live PayPal account profile, 
-	  or you may also use this tool provided by PayPal:
- 
-	  https://www.paypal.com/us/cgi-bin/webscr?cmd=_get-api-signature&generic-flow=true
-
-3) Enjoy your new Virtual Terminal and the lower rates provided by Payments Pro!
+1. Copy all solution files to a directory on your web server (eg. www.domain.com/pos/)
+2. Load the application in a web browser and follow the steps in the Instructions page.
