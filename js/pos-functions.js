@@ -142,14 +142,15 @@ document.onkeydown = function(e) {
     var key = e.charCode ? e.charCode : e.keyCode ? e.keyCode : 0;
     if(key == 13) {
         e.preventDefault();
-        if(document.activeElement.name == 'swiper')
+        if(document.activeElement.name == 'swiper' && $('#swiper').val() != '')
         {
             $('#CreditCardSecurityCode').focus();
         }
         else
         {
-            var inputs = $(this).closest('form').find(':input:visible');
-            inputs.eq( inputs.index(this)+ 1 ).focus();
+            var currentInput = document.activeElement;
+            var inputs = $(currentInput).closest('form').find(':input:visible');
+            inputs.eq( inputs.index(currentInput)+ 1 ).focus();
         }
         return false;
     }
