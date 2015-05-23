@@ -58,9 +58,9 @@ $config['ApiSelection'] = 'PayPal-Rest';
  * Sandbox: https://www.sandbox.paypal.com/us/cgi-bin/webscr?cmd=_get-api-signature&generic-flow=true
  * Live: https://www.paypal.com/us/cgi-bin/webscr?cmd=_get-api-signature&generic-flow=true
  */
-$config['APIUsername'] = $config['Sandbox'] ? 'sandbo_1215254764_biz_api1.angelleye.com' : 'LIVE_USERNAME_GOGES_HERE';
-$config['APIPassword'] = $config['Sandbox'] ? '1215254774' : 'LIVE_PASSWORD_GOGES_HERE';
-$config['APISignature'] = $config['Sandbox'] ? 'AiKZhEEPLJjSIccz.2M.tbyW5YFwAb6E3l6my.pY9br1z2qxKx96W18v' : 'LIVE_SIGNATURE_GOGES_HERE';
+$config['APIUsername'] = $config['Sandbox'] ? 'SANDBOX_USERNAME_GOES_HERE' : 'LIVE_USERNAME_GOGES_HERE';
+$config['APIPassword'] = $config['Sandbox'] ? 'SANDBOX_PASSWORD_GOES_HERE' : 'LIVE_PASSWORD_GOGES_HERE';
+$config['APISignature'] = $config['Sandbox'] ? 'SANDBOX_SIGNATURE_GOES_HERE' : 'LIVE_SIGNATURE_GOES_HERE';
 
 /**
  * PayPalPro-Payflow API Credentials
@@ -78,10 +78,10 @@ $config['APISignature'] = $config['Sandbox'] ? 'AiKZhEEPLJjSIccz.2M.tbyW5YFwAb6E
  * credentials you use to login to the PayPal Manager site then you will need to set
  * the same value for both PayFlowUsername and PayFlowVendor.
  */
-$config['PayFlowUsername'] = $config['Sandbox'] ? 'tester' : 'LIVE_USERNAME_GOES_HERE';
-$config['PayFlowPassword'] = $config['Sandbox'] ? 'Pr0t3ct!' : 'LIVE_PASSWORD_GOES_HERE';
-$config['PayFlowVendor'] = $config['Sandbox'] ? 'angelleye' : 'LIVE_VENDOR_GOES_HERE';
-$config['PayFlowPartner'] = $config['Sandbox'] ? 'PayPal' : 'LIVE_PARTNER_GOES_HERE';
+$config['PayFlowUsername'] = $config['Sandbox'] ? 'SANDBOX_USERNAME_GOES_HERE' : 'LIVE_USERNAME_GOES_HERE';
+$config['PayFlowPassword'] = $config['Sandbox'] ? 'SANDBOX_PASSWORD_GOES_HERE' : 'LIVE_PASSWORD_GOES_HERE';
+$config['PayFlowVendor'] = $config['Sandbox'] ? 'SANDBOX_VENDOR_GOES_HERE' : 'LIVE_VENDOR_GOES_HERE';
+$config['PayFlowPartner'] = $config['Sandbox'] ? 'SANDBOX_PARTNER_GOES_HERE' : 'LIVE_PARTNER_GOES_HERE';
 
 /**
  * PayPal REST API Credentials
@@ -92,8 +92,8 @@ $config['PayFlowPartner'] = $config['Sandbox'] ? 'PayPal' : 'LIVE_PARTNER_GOES_H
  * We're using shorthand if/else statements here to set both Sandbox and Production values.
  * Your sandbox values go on the left and your live values go on the right.
  */
-$config['RESTAPIClient_Id'] = $config['Sandbox'] ? 'AbWX5DtTNUferjgDtrQfRQjqZIOnK25idCvaPH-R-VUpJZMHFG83LPU_o3-5d32dpnO2oVydlzIHjBRX' : 'LIVE_CLIENT_ID_GOES_HERE';
-$config['RESTAPIClient_Secret'] = $config['Sandbox'] ? 'EBn7ARTYLux062X74_hFl_wKkSJMpq69oaVWTMRWWvH9QNt_JMjJ8G0rGczEB86skZf90goieMOQA0Qu' : 'LIVE_CLIENT_SECRET_GOES_HERE';
+$config['RESTAPIClient_Id'] = $config['Sandbox'] ? 'SANDBOX_CLIENT_ID_GOES_HERE' : 'LIVE_CLIENT_ID_GOES_HERE';
+$config['RESTAPIClient_Secret'] = $config['Sandbox'] ? 'LIVE_CLIENT_SECRET_GOES_HERE' : 'LIVE_CLIENT_SECRET_GOES_HERE';
 
 /**
  * Set Currency Sign (default is US Dollar Sign $)
