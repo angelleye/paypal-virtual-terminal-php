@@ -178,8 +178,11 @@ function ClearStripeData() {
 
 /* Blur swipe field */
 function BlurStripeField() {
-    ClearStripeData();
-    $('#CreditCardSecurityCode').focus();
+    if($(this).val() != '')
+    {
+        $('#CreditCardSecurityCode').focus();
+        ClearStripeData();
+    }
 }
 
 /* Parse data from card stripe swiped */
