@@ -212,7 +212,7 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
     if(isset($config['DebugMode']) && $config['DebugMode'])
     {
         $returnHtml .= '<hr>';
-        $returnHtml .= '<pre>'.$_SESSION['DPResult'].'</pre>';
+        $returnHtml .= '<pre>'.print_r($_SESSION['DPResult'], TRUE).'</pre>';
     }
 
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
@@ -425,7 +425,7 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     if(isset($config['DebugMode']) && $config['DebugMode'])
     {
         $returnHtml .= '<hr>';
-        $returnHtml .= '<pre>'.$_SESSION['PayPayResult'].'</pre>';
+        $returnHtml .= '<pre>'.print_r($_SESSION['PayPayResult'], TRUE).'</pre>';
     }
 
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
@@ -644,7 +644,7 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     if(isset($config['DebugMode']) && $config['DebugMode'])
     {
         $returnHtml .= '<hr>';
-        $returnHtml .= '<pre>'.$payment.'</pre>';
+        $returnHtml .= '<pre>'.print_r($payment, TRUE).'</pre>';
     }
 
     // Write to transaction log
