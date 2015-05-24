@@ -667,7 +667,7 @@ function logTransaction($data = array(), $file = ''){
     if(!empty($data) && $file != '')
     {
         // Append to log file
-        file_put_contents($file, print_r($data, true), FILE_APPEND);
+        file_put_contents($file, print_r($data, true) . "\n\n", FILE_APPEND);
     }
 }
 
