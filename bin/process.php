@@ -202,6 +202,13 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
     }
     $returnHtml .= '</table>';
 
+    // DebugMode output
+    if(isset($config['DebugMode']) && $config['DebugMode'])
+    {
+        $returnHtml .= '<hr>';
+        $returnHtml .= '<pre>'.$_SESSION['DPResult'].'</pre>';
+    }
+
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
     exit;
 }
@@ -401,6 +408,13 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $returnHtml .= '<tr><th>' . str_replace("_", " ", $k) . '</th><td>' . str_replace("_", " ", $v) . '</td></tr>';
     }
     $returnHtml .= '</table>';
+
+    // DebugMode output
+    if(isset($config['DebugMode']) && $config['DebugMode'])
+    {
+        $returnHtml .= '<hr>';
+        $returnHtml .= '<pre>'.$_SESSION['PayPayResult'].'</pre>';
+    }
 
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
     exit;
@@ -605,8 +619,13 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $returnHtml .= '<tr><th>' . str_replace("_", " ", $k) . '</th><td>' . str_replace("_", " ", $v) . '</td></tr>';
     }
     $returnHtml .= '</table>';
-    $returnHtml .= '<hr>';
-    $returnHtml .= '<pre>'.$payment.'</pre>';
+
+    // DebugMode output
+    if(isset($config['DebugMode']) && $config['DebugMode'])
+    {
+        $returnHtml .= '<hr>';
+        $returnHtml .= '<pre>'.$payment.'</pre>';
+    }
 
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
     exit;

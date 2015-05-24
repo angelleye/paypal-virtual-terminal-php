@@ -17,6 +17,12 @@ $config = array();
 $config['Sandbox'] = TRUE;
 
 /**
+ * Enable Debug Mode
+ * TRUE means that virtual terminal results will contain full response details returned from PayPal.
+ */
+$config['DebugMode'] = FALSE;
+
+/**
  * Enable Sessions
  */
 if(!session_id()) session_start();
