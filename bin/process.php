@@ -556,12 +556,14 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $payment->create($paypal_rest);
 
         if($payment->getState() == 'approved'){
-            $_SESSION['transaction_id'] = $payment->getId();
+            $_SESSION['payment_id'] = $payment->getId();
+            $_SESSION['transaction_id'] = $transaction->related_resources->sale->id;
             $_SESSION['created'] = $payment->getCreateTime();
             $_SESSION['state'] = $payment->getState();
 
             $returnData = array(
                 'Transaction_ID' => $_SESSION['transaction_id'],
+                'Payment_ID' => $_SESSION['payment_id'],
                 'Created' => $_SESSION['created'],
                 'State' => $_SESSION['state']
             );
