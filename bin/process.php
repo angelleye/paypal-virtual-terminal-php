@@ -169,6 +169,12 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
 
     $_SESSION['DPResult'] = $paypal->DoDirectPayment($DPData);
 
+    // Write to transaction log
+    if(isset($config['LogEnabled']) && $config['LogEnabled'])
+    {
+        logTransaction($_SESSION['DPResult'], $config['LogFilePath']);
+    }
+
     if (strtoupper($_SESSION['DPResult']['ACK']) == 'FAILURE' || strtoupper($_SESSION['DPResult']['ACK']) == 'FAILUREWITHWARNING') {
         $_SESSION['paypal_errors'] = $_SESSION['DPResult']['ERRORS'];
         $PayPalErrors = $_SESSION['paypal_errors'];
@@ -352,6 +358,12 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     );
 
     $_SESSION['PayPayResult'] = $paypal->ProcessTransaction($PayPalRequestData);
+
+    // Write to transaction log
+    if(isset($config['LogEnabled']) && $config['LogEnabled'])
+    {
+        logTransaction($_SESSION['PayPayResult'], $config['LogFilePath']);
+    }
 
     if(isset($_SESSION['PayPayResult']['RESULT']) && ($_SESSION['PayPayResult']['RESULT'] != 0))
     {
@@ -578,6 +590,12 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     } catch ( \PayPal\Exception\PayPalConnectionException $ex) {
         $PayPalErrors = json_decode($ex->getData());
 
+        // Write to transaction log
+        if(isset($config['LogEnabled']) && $config['LogEnabled'])
+        {
+            logTransaction($PayPalErrors, $config['LogFilePath']);
+        }
+
         $result_data_html = '<ul>';
         if(isset($PayPalErrors->name))
         {
@@ -629,6 +647,12 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $returnHtml .= '<pre>'.$payment.'</pre>';
     }
 
+    // Write to transaction log
+    if(isset($config['LogEnabled']) && $config['LogEnabled'])
+    {
+        logTransaction($payment, $config['LogFilePath']);
+    }
+
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
     exit;
 }
@@ -639,4 +663,11 @@ else
     exit;
 }
 
+function logTransaction($data = array(), $file = ''){
+    if(!empty($data) && $file != '')
+    {
+        // Append to log file
+        file_put_contents($file, print_r($data, true), FILE_APPEND);
+    }
+}
 
