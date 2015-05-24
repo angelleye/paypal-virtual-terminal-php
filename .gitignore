@@ -1,3 +1,4 @@
 .idea
 temp
 includes/config.php
+logs/paypal-pos-log.txt
