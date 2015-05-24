@@ -118,5 +118,11 @@ $config['ShowNavMenuLeft'] = TRUE;
  */
 $config['ShowSwipeField'] = TRUE;
 
+/**
+ * Enable transaction log
+ * TRUE means transaction data will write to log file specified
+ */
+$config['LogEnabled'] = TRUE;
+$config['LogFilePath'] = '../logs/paypal-pos-log.txt';
 
 /* End of file config.php */
