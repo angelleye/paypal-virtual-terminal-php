@@ -118,5 +118,9 @@ $config['ShowNavMenuLeft'] = TRUE;
  */
 $config['ShowSwipeField'] = TRUE;
 
+/**
+ * Set default tax rate
+ */
+$config['DefaultTaxRate'] = '';
 
 /* End of file config.php */
