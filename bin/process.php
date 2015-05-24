@@ -593,7 +593,8 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         // Write to transaction log
         if(isset($config['LogEnabled']) && $config['LogEnabled'])
         {
-            logTransaction($PayPalErrors, $config['LogFilePath']);
+            $log_array = (array) $PayPalErrors;
+            logTransaction($log_array, $config['LogFilePath']);
         }
 
         $result_data_html = '<ul>';
