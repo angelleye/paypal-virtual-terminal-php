@@ -309,7 +309,7 @@ require_once('../includes/config.php');
                                                 <label class="col-lg-3 col-sm-4 control-label" for="TaxRate">Tax Rate</label>
                                                 <div class="col-lg-3 col-sm-5">
                                                     <div class="input-group">
-                                                        <input type="text" class="form-control" name="TaxRate" id="TaxRate" maxlength="4" value="<?php echo (isset($config['DefaultTaxRate']) && $config['DefaultTaxRate'] != '') ? $config['DefaultTaxRate'] : '$'; ?>" />
+                                                        <input type="text" class="form-control" name="TaxRate" id="TaxRate" maxlength="4" value="<?php echo !empty($config['DefaultTaxRate']) ? $config['DefaultTaxRate'] : ''; ?>" />
                                                         <div class="input-group-addon">%</div>
                                                     </div>
                                                 </div>
