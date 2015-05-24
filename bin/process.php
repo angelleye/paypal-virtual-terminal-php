@@ -25,7 +25,7 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
     $_SESSION['transaction_type'] = isset($_POST['TransactionType']) ? $_POST['TransactionType'] : 'Authorization';
     $_SESSION['cc_type'] = isset($_POST['CreditCardType']) ? $_POST['CreditCardType'] : '';
     $_SESSION['cc_number'] = isset($_POST['CreditCardNumber']) ? $_POST['CreditCardNumber'] : '';
-    $_SESSION['cc_expdate'] = isset($_POST['CreditCardExpMo']) ?  $_POST['CreditCardExpMo']. substr($_POST['CreditCardExpYear'], 2, 2) : '';
+    $_SESSION['cc_expdate'] = isset($_POST['CreditCardExpMo']) ?  $_POST['CreditCardExpMo'] . $_POST['CreditCardExpYear'] : '';
     $_SESSION['cvv2'] = isset($_POST['CreditCardSecurityCode']) ? $_POST['CreditCardSecurityCode'] : '';
 
     // Check to see if they manually enter in billing information
