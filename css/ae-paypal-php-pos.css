@@ -77,3 +77,12 @@
 #pos-panel-success table td {
     padding:10px;
 }
+
+#pos-panel-success-details li {
+    list-style-type: none!important;
+}
+#pos-panel-success-details h4 {
+    border-bottom: 1px solid #CCC;
+    padding-bottom: 5px;
+    font-weight: bold;
+}
