@@ -249,6 +249,7 @@ function updateSalesTax()
 {
     var currencySign = $('#ae-paypal-pos-form').attr('data-currency-sign');
     var taxAmount = ( $('#TaxRate').val().replace(/,/g, '') / 100 ) * $('#NetAmount').val().replace(/,/g, '');
+    if(!taxAmount) taxAmount = 0;
     $('#TaxAmountDisplay').html('<i>(' + currencySign + ' ' + roundNumber(taxAmount, 2).replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,") + ')</i>');
     var taxAmountRounded = roundNumber(taxAmount,2);
     $('#TaxAmount').val(taxAmountRounded);
