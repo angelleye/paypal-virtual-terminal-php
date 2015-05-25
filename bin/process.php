@@ -194,19 +194,85 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
     $_SESSION['transaction_id'] = isset($_SESSION['DPResult']['TRANSACTIONID']) ? $_SESSION['DPResult']['TRANSACTIONID'] : '';
     $_SESSION['avscode'] = isset($_SESSION['DPResult']['AVSCODE']) ? $_SESSION['DPResult']['AVSCODE'] : '';
     $_SESSION['cvv2match'] = isset($_SESSION['DPResult']['CVV2MATCH']) ? $_SESSION['DPResult']['CVV2MATCH'] : '';
+    $_SESSION['timestamp'] = isset($_SESSION['DPResult']['TIMESTAMP']) ? $_SESSION['DPResult']['TIMESTAMP'] : '';
+    $_SESSION['currency_code'] = isset($_SESSION['DPResult']['CURRENCYCODE']) ? $_SESSION['DPResult']['CURRENCYCODE'] : '';
 
-    $returnData = array(
+    $returnData = array();
+    $returnData['payment_details'] = array(
         'Transaction_ID' => $_SESSION['transaction_id'],
+        'Timestamp' => $_SESSION['timestamp'],
         'AVS_Code' => $_SESSION['avscode'],
-        'CVV2_Match' => $_SESSION['cvv2match']
+        'CVV2_Match' => $_SESSION['cvv2match'],
+        'Currency_Code' => $_SESSION['currency_code'],
+        'amount' => $_SESSION['amount'],
+        'shipping_amount' => $_SESSION['shipping_amount'],
+        'handling_amount' => $_SESSION['handling_amount'],
+        'tax_amount' => $_SESSION['tax_amount'],
+        'transaction_type' => $_SESSION['transaction_type'],
+        'card_type' => $_SESSION['cc_type'],
+        'card_number' => substr($_SESSION['cc_number'], 0, 4) . str_repeat("X", strlen($_SESSION['cc_number']) - 8) . substr($_SESSION['cc_number'], -4),
+        'card_expiration' => $_SESSION['cc_expdate'],
+        'invoice' => $_SESSION['invoice'],
+        'item_name' => $_SESSION['item_name'],
+        'notes' => $_SESSION['notes']
+    );
+    $returnData['billing_info'] = array(
+        'first_name' => $_SESSION['billing_first_name'],
+        'last_name' => $_SESSION['billing_last_name'],
+        'street_1' => $_SESSION['billing_street1'],
+        'street_2' => $_SESSION['billing_street2'],
+        'city' => $_SESSION['billing_city'],
+        'state' => $_SESSION['billing_state'],
+        'postal_code' => $_SESSION['billing_postal_code'],
+        'country_code' => $_SESSION['billing_country_code'],
+        'phone' => $_SESSION['billing_phone'],
+        'email' => $_SESSION['billing_email'],
+    );
+    $returnData['shipping_info'] = array(
+        'first_name' => $_SESSION['shipping_first_name'],
+        'last_name' => $_SESSION['shipping_last_name'],
+        'street_1' => $_SESSION['shipping_street1'],
+        'street_2' => $_SESSION['shipping_street2'],
+        'city' => $_SESSION['shipping_city'],
+        'state' => $_SESSION['shipping_state'],
+        'postal_code' => $_SESSION['shipping_postal_code'],
+        'country_code' => $_SESSION['shipping_country_code'],
+        'phone' => $_SESSION['shipping_phone'],
+        'email' => $_SESSION['shipping_email'],
     );
 
-    $returnHtml = '<h3>Payment Details</h3>';
-    $returnHtml .= '<table class="table-responsive table-striped">';
-    foreach ($returnData as $k => $v) {
-        $returnHtml .= '<tr><th>' . str_replace("_", " ", $k) . '</th><td>' . str_replace("_", " ", $v) . '</td></tr>';
+    $returnHtml = '';
+    $returnHtml .= '<div class="well">';
+    $returnHtml .= '<div class="row" id="pos-panel-success-details">';
+    $returnHtml .= '<div class="col-lg-4"><h4>Payment Details</h4>';
+    foreach ($returnData['payment_details'] as $k => $v) {
+        if(!empty($v))
+        {
+            $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+        }
     }
-    $returnHtml .= '</table>';
+    $returnHtml .= '</div>';
+    $returnHtml .= '<div class="col-lg-4"><h4>Billing Info</h4>';
+    foreach ($returnData['billing_info'] as $k => $v) {
+        if(!empty($v))
+        {
+            $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+        }
+    }
+    $returnHtml .= '</div>';
+    if(!empty($returnData['shipping_info']['first_name']))
+    {
+        $returnHtml .= '<div class="col-lg-4"><h4>Shipping Info</h4>';
+        foreach ($returnData['shipping_info'] as $k => $v) {
+            if(!empty($v))
+            {
+                $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+            }
+        }
+        $returnHtml .= '</div>';
+    }
+    $returnHtml .= '</div>';
+    $returnHtml .= '</div>';
 
     // DebugMode output
     if(isset($config['DebugMode']) && $config['DebugMode'])
@@ -395,7 +461,8 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     $_SESSION['CARDTYPE'] = isset($_SESSION['PayPayResult']['CARDTYPE']) ? $_SESSION['PayPayResult']['CARDTYPE'] : '';
     $_SESSION['IAVS'] = isset($_SESSION['PayPayResult']['IAVS']) ? $_SESSION['PayPayResult']['IAVS'] : '';
 
-    $returnData = array(
+    $returnData = array();
+    $returnData['payment_details'] = array(
         'PNREF' => $_SESSION['PNREF'],
         'RESPMSG' => $_SESSION['RESPMSG'],
         'AUTHCODE' => $_SESSION['AUTHCODE'],
@@ -405,21 +472,76 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         'PROCAVS' => $_SESSION['PROCAVS'],
         'PROCCVV2' => $_SESSION['PROCCVV2'],
         'TRANSTIME' => $_SESSION['TRANSTIME'],
-        'BILLTOFIRSTNAME' => $_SESSION['BILLTOFIRSTNAME'],
-        'BILLTOLASTNAME' => $_SESSION['BILLTOLASTNAME'],
-        'AMT' => $_SESSION['AMT'],
-        'ACCT' => $_SESSION['ACCT'],
-        'EXPDATE' => $_SESSION['EXPDATE'],
-        'CARDTYPE' => $_SESSION['CARDTYPE'],
         'IAVS' => $_SESSION['IAVS'],
+        'amount' => $_SESSION['amount'],
+        'shipping_amount' => $_SESSION['shipping_amount'],
+        'handling_amount' => $_SESSION['handling_amount'],
+        'tax_amount' => $_SESSION['tax_amount'],
+        'transaction_type' => $_SESSION['transaction_type'],
+        'card_type' => $_SESSION['cc_type'],
+        'card_number' => substr($_SESSION['cc_number'], 0, 4) . str_repeat("X", strlen($_SESSION['cc_number']) - 8) . substr($_SESSION['cc_number'], -4),
+        'card_expiration' => $_SESSION['EXPDATE'],
+        'invoice' => $_SESSION['invoice'],
+        'item_name' => $_SESSION['item_name'],
+        'notes' => $_SESSION['notes']
+    );
+    $returnData['billing_info'] = array(
+        'first_name' => $_SESSION['billing_first_name'],
+        'last_name' => $_SESSION['billing_last_name'],
+        'street_1' => $_SESSION['billing_street1'],
+        'street_2' => $_SESSION['billing_street2'],
+        'city' => $_SESSION['billing_city'],
+        'state' => $_SESSION['billing_state'],
+        'postal_code' => $_SESSION['billing_postal_code'],
+        'country_code' => $_SESSION['billing_country_code'],
+        'phone' => $_SESSION['billing_phone'],
+        'email' => $_SESSION['billing_email'],
+    );
+    $returnData['shipping_info'] = array(
+        'first_name' => $_SESSION['shipping_first_name'],
+        'last_name' => $_SESSION['shipping_last_name'],
+        'street_1' => $_SESSION['shipping_street1'],
+        'street_2' => $_SESSION['shipping_street2'],
+        'city' => $_SESSION['shipping_city'],
+        'state' => $_SESSION['shipping_state'],
+        'postal_code' => $_SESSION['shipping_postal_code'],
+        'country_code' => $_SESSION['shipping_country_code'],
+        'phone' => $_SESSION['shipping_phone'],
+        'email' => $_SESSION['shipping_email'],
     );
 
-    $returnHtml = '<h3>Payment Details</h3>';
-    $returnHtml .= '<table class="table-responsive table-striped">';
-    foreach ($returnData as $k => $v) {
-        $returnHtml .= '<tr><th>' . str_replace("_", " ", $k) . '</th><td>' . str_replace("_", " ", $v) . '</td></tr>';
+    $returnHtml = '';
+    $returnHtml .= '<div class="well">';
+    $returnHtml .= '<div class="row" id="pos-panel-success-details">';
+    $returnHtml .= '<div class="col-lg-4"><h4>Payment Details</h4>';
+    foreach ($returnData['payment_details'] as $k => $v) {
+        if(!empty($v))
+        {
+            $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+        }
     }
-    $returnHtml .= '</table>';
+    $returnHtml .= '</div>';
+    $returnHtml .= '<div class="col-lg-4"><h4>Billing Info</h4>';
+    foreach ($returnData['billing_info'] as $k => $v) {
+        if(!empty($v))
+        {
+            $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+        }
+    }
+    $returnHtml .= '</div>';
+    if(!empty($returnData['shipping_info']['first_name']))
+    {
+        $returnHtml .= '<div class="col-lg-4"><h4>Shipping Info</h4>';
+        foreach ($returnData['shipping_info'] as $k => $v) {
+            if(!empty($v))
+            {
+                $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+            }
+        }
+        $returnHtml .= '</div>';
+    }
+    $returnHtml .= '</div>';
+    $returnHtml .= '</div>';
 
     // DebugMode output
     if(isset($config['DebugMode']) && $config['DebugMode'])
@@ -584,20 +706,13 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
             }
 
             $_SESSION['payment_id'] = $payment->getId();
-            $_SESSION['created'] = $payment->getCreateTime();
-            $_SESSION['state'] = $payment->getState();
-
-            $returnData = array(
-                'Transaction_ID' => $_SESSION['transaction_id'],
-                'Payment_ID' => $_SESSION['payment_id'],
-                'Created' => $_SESSION['created'],
-                'State' => $_SESSION['state']
-            );
+            $_SESSION['payment_created'] = $payment->getCreateTime();
+            $_SESSION['payment_state'] = $payment->getState();
         }
         else
         {
-            $_SESSION['state'] = $payment->getState();
-            $result_data_html = $_SESSION['state'];
+            $_SESSION['payment_state'] = $payment->getState();
+            $result_data_html = $_SESSION['payment_state'];
             echo json_encode(array('result' => 'error', 'result_data' => $result_data_html));
             exit;
         }
@@ -648,12 +763,81 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         exit;
     }
 
-    $returnHtml = '<h3>Payment Details</h3>';
-    $returnHtml .= '<table class="table-responsive table-striped">';
-    foreach ($returnData as $k => $v) {
-        $returnHtml .= '<tr><th>' . str_replace("_", " ", $k) . '</th><td>' . str_replace("_", " ", $v) . '</td></tr>';
+    $returnData = array();
+    $returnData['payment_details'] = array(
+        'transaction_ID' => $_SESSION['transaction_id'],
+        'payment_ID' => $_SESSION['payment_id'],
+        'payment_created' => $_SESSION['payment_created'],
+        'payment_state' => $_SESSION['payment_state'],
+        'amount' => $_SESSION['amount'],
+        'shipping_amount' => $_SESSION['shipping_amount'],
+        'handling_amount' => $_SESSION['handling_amount'],
+        'tax_amount' => $_SESSION['tax_amount'],
+        'transaction_type' => $_SESSION['transaction_type'],
+        'card_type' => $_SESSION['cc_type'],
+        'card_number' => substr($_SESSION['cc_number'], 0, 4) . str_repeat("X", strlen($_SESSION['cc_number']) - 8) . substr($_SESSION['cc_number'], -4),
+        'card_expiration' => $_SESSION['cc_expdate'],
+        'invoice' => $_SESSION['invoice'],
+        'item_name' => $_SESSION['item_name'],
+        'notes' => $_SESSION['notes']
+    );
+    $returnData['billing_info'] = array(
+        'first_name' => $_SESSION['billing_first_name'],
+        'last_name' => $_SESSION['billing_last_name'],
+        'street_1' => $_SESSION['billing_street1'],
+        'street_2' => $_SESSION['billing_street2'],
+        'city' => $_SESSION['billing_city'],
+        'state' => $_SESSION['billing_state'],
+        'postal_code' => $_SESSION['billing_postal_code'],
+        'country_code' => $_SESSION['billing_country_code'],
+        'phone' => $_SESSION['billing_phone'],
+        'email' => $_SESSION['billing_email'],
+    );
+    $returnData['shipping_info'] = array(
+        'first_name' => $_SESSION['shipping_first_name'],
+        'last_name' => $_SESSION['shipping_last_name'],
+        'street_1' => $_SESSION['shipping_street1'],
+        'street_2' => $_SESSION['shipping_street2'],
+        'city' => $_SESSION['shipping_city'],
+        'state' => $_SESSION['shipping_state'],
+        'postal_code' => $_SESSION['shipping_postal_code'],
+        'country_code' => $_SESSION['shipping_country_code'],
+        'phone' => $_SESSION['shipping_phone'],
+        'email' => $_SESSION['shipping_email'],
+    );
+
+    $returnHtml = '';
+    $returnHtml .= '<div class="well">';
+    $returnHtml .= '<div class="row" id="pos-panel-success-details">';
+    $returnHtml .= '<div class="col-lg-4"><h4>Payment Details</h4>';
+    foreach ($returnData['payment_details'] as $k => $v) {
+        if(!empty($v))
+        {
+            $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+        }
     }
-    $returnHtml .= '</table>';
+    $returnHtml .= '</div>';
+    $returnHtml .= '<div class="col-lg-4"><h4>Billing Info</h4>';
+    foreach ($returnData['billing_info'] as $k => $v) {
+        if(!empty($v))
+        {
+            $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+        }
+    }
+    $returnHtml .= '</div>';
+    if(!empty($returnData['shipping_info']['first_name']))
+    {
+        $returnHtml .= '<div class="col-lg-4"><h4>Shipping Info</h4>';
+        foreach ($returnData['shipping_info'] as $k => $v) {
+            if(!empty($v))
+            {
+                $returnHtml .= '<li><strong>' . ucfirst(str_replace("_", " ", $k)) . '</strong>:&nbsp;' . str_replace("_", " ", $v) . '</li>';
+            }
+        }
+        $returnHtml .= '</div>';
+    }
+    $returnHtml .= '</div>';
+    $returnHtml .= '</div>';
 
     // DebugMode output
     if(isset($config['DebugMode']) && $config['DebugMode'])
