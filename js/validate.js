@@ -88,6 +88,8 @@ $(function() {
                             $('#pos-submit-btn').removeAttr('disabled');
                             $('#pos-submit-btn').html('Process Payment');
                             $('#pos-submit-btn').hide();
+                            $('#ae-paypal-pos-input-panels').hide();
+                            $('#pos-intro-alert-msg').hide();
                             // show success panel
                             $('#pos-panel-success').slideDown(400);
                             $('#pos-panel-success-output').html(responseData.result_html);
