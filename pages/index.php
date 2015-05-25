@@ -137,14 +137,14 @@ require_once('../includes/config.php');
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">Virtual Terminal</h1>
-                        <div class="alert alert-info">
+                        <div class="alert alert-info" id="pos-intro-alert-msg">
                             <p>To submit a new transaction enter the payment details below, then click the process payment button.</p>
                         </div>
 
                         <!-- POS form -->
                         <form class="form-horizontal" id="ae-paypal-pos-form" name="ae-paypal-pos-form" data-currency-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" role="form" method="POST" action="../bin/process.php" autocomplete="off">
 
-                            <div class="row">
+                            <div class="row" id="ae-paypal-pos-input-panels">
                                 <div class="col-lg-12">
 
                                     <?php if( isset($config['ShowSwipeField']) && $config['ShowSwipeField']) { ?>
@@ -1172,6 +1172,13 @@ require_once('../includes/config.php');
                                         </div>
                                     </div>
 
+                                </div>
+                                <!-- /.col-lg-12 -->
+                            </div>
+                            <!-- /.row -->
+
+                            <div class="row">
+                                <div class="col-lg-12">
                                     <!-- Errors panel -->
                                     <div class="panel panel-red" id="pos-panel-errors">
                                         <div class="panel-heading">PayPal Errors</div>
