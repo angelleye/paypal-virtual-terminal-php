@@ -2,7 +2,7 @@
 Introduction
 ###################
 
-This is a bare-bones but functional template to use as a web-based point-of-sale / virtual terminal solution for PayPal.  It is compatible with the following:
+This is a basic, fully functional solution to use as a web-based point-of-sale / virtual terminal for PayPal.  It is compatible with the following:
 
 * PayPal Website Payments Pro 3.0 (DoDirectPayment)
 * PayPal Payments Pro 1.5 / 2.0 (PayFlow Gateway)
