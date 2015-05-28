@@ -361,7 +361,7 @@ require_once('../includes/config.php');
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="billingInfo">Enter Billing Address</label>
                                                 <div class="col-lg-4 col-sm-8">
-                                                    <input type="checkbox" class="checkbox" checked="checked" name="billingInfo" id="billingInfo" value="true" />
+                                                    <input type="checkbox" class="checkbox" name="billingInfo" checked="checked" id="billingInfo" value="true" <?php echo (isset($config['BillingInfoActive']) && $config['BillingInfoActive']) ? 'data-default-checked="TRUE"' : 'data-default-checked="FALSE"' ?> />
                                                 </div>
                                             </div>
 
@@ -759,14 +759,14 @@ require_once('../includes/config.php');
                                             <div class="form-group">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="shippingDisabled">Shipping Not Req.</label>
                                                 <div class="col-lg-4 col-sm-8">
-                                                    <input type="checkbox" class="checkbox" name="shippingDisabled" id="shippingDisabled" value="true" />
+                                                    <input type="checkbox" class="checkbox" name="shippingDisabled" id="shippingDisabled" value="true" <?php echo (isset($config['ShippingNotRequired']) && $config['ShippingNotRequired']) ? 'data-default-checked="TRUE"' : 'data-default-checked="FALSE"' ?> />
                                                 </div>
                                             </div>
 
                                             <div class="form-group" id="sameAsBilling">
                                                 <label class="col-lg-3 col-sm-4 control-label" for="shippingSameAsBilling">Same as Billing</label>
                                                 <div class="col-lg-4 col-sm-8">
-                                                    <input type="checkbox" class="checkbox" name="shippingSameAsBilling" id="shippingSameAsBilling" value="true" data-switch-state="false" />
+                                                    <input type="checkbox" class="checkbox" name="shippingSameAsBilling" id="shippingSameAsBilling" value="true" <?php echo (isset($config['ShippingSameAsBilling']) && $config['ShippingSameAsBilling']) ? 'data-default-checked="TRUE"' : 'data-default-checked="FALSE"' ?> />
                                                 </div>
                                             </div>
 
