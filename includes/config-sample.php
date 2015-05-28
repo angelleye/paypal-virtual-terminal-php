@@ -125,6 +125,24 @@ $config['ShowNavMenuLeft'] = TRUE;
 $config['ShowSwipeField'] = TRUE;
 
 /**
+ * Default Form Setting - Enter Billing Address checkbox
+ * TRUE == checked (default), FALSE == unchecked
+ */
+$config['BillingInfoActive'] = TRUE;
+
+/**
+ * Default Form Setting - Shipping Not Required checkbox
+ * TRUE == checked, FALSE == unchecked (default)
+ */
+$config['ShippingNotRequired'] = FALSE;
+
+/**
+ * Default Form Setting - Shipping Same As Billing checkbox
+ * TRUE == checked, FALSE == unchecked (default)
+ */
+$config['ShippingSameAsBilling'] = FALSE;
+
+/**
  * Set default tax rate
  */
 $config['DefaultTaxRate'] = '';
