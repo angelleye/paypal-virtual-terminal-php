@@ -53,7 +53,7 @@ $(function() {
             return false;
         });
 
-        /* Toggle Billing Fields */
+       /* Toggle Shipping Fields */
         $('input[name="shippingDisabled"]').on('switchChange.bootstrapSwitch', function(event, state) {
             //console.log(this); // DOM element
             //console.log(event); // jQuery event
@@ -66,7 +66,6 @@ $(function() {
             else
             {
                 $('#sameAsBilling').show();
-                //$('#ShippingFirstName, #ShippingLastName, #ShippingStreet, #ShippingCity, #ShippingState, #ShippingCountryCode, #ShippingPostalCode').attr('required', 'required');
                 if(!$('#shippingSameAsBilling').bootstrapSwitch('state')) {
                     $('#FormShippingAddress').slideDown('400');
                 }
@@ -77,7 +76,7 @@ $(function() {
             return false;
         });
 
-        /* Toggle Billing Fields */
+        /* Toggle Shipping Fields */
         $('input[name="shippingSameAsBilling"]').on('switchChange.bootstrapSwitch', function(event, state) {
             //console.log(this); // DOM element
             //console.log(event); // jQuery event
@@ -134,6 +133,42 @@ $(function() {
             }
             return false;
         });
+
+        /* Toggle defaults on checkboxes */
+        window.setTimeout(function(){
+            if($('#billingInfo').attr('data-default-checked') != 'TRUE')
+            {
+                $('#billingInfo').bootstrapSwitch('toggleState');
+            }
+            if($('#shippingDisabled').attr('data-default-checked') == 'TRUE')
+            {
+                if($('#shippingSameAsBilling').attr('data-default-checked') == 'TRUE')
+                {
+                    $('#shippingSameAsBilling').bootstrapSwitch('state', true, true);
+                }
+                $('#shippingDisabled').bootstrapSwitch('toggleState');
+            }
+            else
+            {
+                if($('#shippingSameAsBilling').attr('data-default-checked') == 'TRUE' && $('#shippingDisabled').attr('data-default-checked') != 'TRUE')
+                {
+                    $('#shippingSameAsBilling').bootstrapSwitch('toggleState');
+                }
+            }
+        }, 700);
+
+        if($('#shippingDisabled').is(':checked'))
+        {
+            $('#ShippingFirstName, #ShippingLastName, #ShippingStreet, #ShippingCity, #ShippingState, #ShippingCountryCode, #ShippingPostalCode').removeAttr('required');
+            $('#FormShippingAddress').hide();
+            $('#sameAsBilling').hide();
+        }
+
+        if($('#sameAsBilling').is(':checked'))
+        {
+            $('#ShippingFirstName, #ShippingLastName, #ShippingStreet, #ShippingCity, #ShippingState, #ShippingCountryCode, #ShippingPostalCode').removeAttr('required');
+            $('#FormShippingAddress').hide();
+        }
 
     });
 });
