@@ -99,7 +99,7 @@ $config['PayFlowPartner'] = $config['Sandbox'] ? 'SANDBOX_PARTNER_GOES_HERE' : '
  * Your sandbox values go on the left and your live values go on the right.
  */
 $config['RESTAPIClient_Id'] = $config['Sandbox'] ? 'SANDBOX_CLIENT_ID_GOES_HERE' : 'LIVE_CLIENT_ID_GOES_HERE';
-$config['RESTAPIClient_Secret'] = $config['Sandbox'] ? 'LIVE_CLIENT_SECRET_GOES_HERE' : 'LIVE_CLIENT_SECRET_GOES_HERE';
+$config['RESTAPIClient_Secret'] = $config['Sandbox'] ? 'SANDBOX_CLIENT_SECRET_GOES_HERE' : 'LIVE_CLIENT_SECRET_GOES_HERE';
 
 /**
  * Set Currency Sign (default is US Dollar Sign $)
