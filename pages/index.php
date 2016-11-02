@@ -737,7 +737,7 @@ require_once('../includes/config.php');
                                                 <div class="form-group">
                                                     <label class="col-lg-3 col-sm-4 control-label" for="BillingPhoneNumber">Phone Number</label>
                                                     <div class="col-lg-3 col-sm-4">
-                                                        <input type="text" class="form-control" name="BillingPhoneNumber" id="BillingPhoneNumber" maxlength="25" />
+                                                        <input type="text" class="form-control" name="BillingPhoneNumber" id="BillingPhoneNumber" maxlength="10" />
                                                     </div>
                                                 </div>
 
@@ -1156,7 +1156,7 @@ require_once('../includes/config.php');
                                                 <div class="form-group">
                                                     <label class="col-lg-3 col-sm-4 control-label" for="ShippingPhoneNumber">Phone Number</label>
                                                     <div class="col-lg-3 col-sm-4">
-                                                        <input type="text" class="form-control" name="ShippingPhoneNumber" id="ShippingPhoneNumber" maxlength="25" />
+                                                        <input type="text" class="form-control" name="ShippingPhoneNumber" id="ShippingPhoneNumber" maxlength="10" />
                                                     </div>
                                                 </div>
 
