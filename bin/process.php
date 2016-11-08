@@ -182,6 +182,12 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
         $_SESSION['paypal_errors'] = $_SESSION['DPResult']['ERRORS'];
         $PayPalErrors = $_SESSION['paypal_errors'];
 
+        // Write to transaction log
+        if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
+        {
+            logTransaction($PayPalErrors, $config['LogFilePath']);
+        }
+
         $result_data_html = '<ul>';
         foreach ($PayPalErrors as $error) {
             foreach ($error as $k => $v) {
@@ -440,6 +446,12 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     {
         $_SESSION['paypal_errors'] = $_SESSION['PayPayResult']['RESPMSG'];
         $PayPalErrors = $_SESSION['paypal_errors'];
+
+        // Write to transaction log
+        if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
+        {
+            logTransaction($PayPalErrors, $config['LogFilePath']);
+        }
 
         $result_data_html = '<ul>';
         $result_data_html .= '<li><strong>ERROR</strong>&nbsp;' . $PayPalErrors . '</li>';
@@ -772,6 +784,12 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         exit;
     }
 
+    // Write to transaction log
+    if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
+    {
+        logTransaction($payment, $config['LogFilePath']);
+    }
+
     $returnData = array();
     $returnData['payment_details'] = array(
         'transaction_ID' => $_SESSION['transaction_id'],
@@ -855,17 +873,17 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $returnHtml .= '<pre>'.print_r($payment, TRUE).'</pre>';
     }
 
-    // Write to transaction log
-    if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
-    {
-        logTransaction($payment, $config['LogFilePath']);
-    }
-
     echo json_encode(array('result' => 'success', 'result_data' => $returnData, 'result_html' => $returnHtml));
     exit;
 }
 else
 {
+    // Write to transaction log
+    if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
+    {
+        logTransaction(array('CONFIG ERROR: ' => 'Missing configuration; set your preferred API in config file.'), $config['LogFilePath']);
+    }
+
     // error - ApiSelection
     echo json_encode(array('result' => 'error', 'result_data' => 'Missing configuration; set your preferred API in config file.'));
     exit;
