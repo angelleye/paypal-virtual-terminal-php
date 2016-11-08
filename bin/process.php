@@ -636,6 +636,10 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $config['RESTAPIClient_Id'],
         $config['RESTAPIClient_Secret']));
 
+    // Set config mode for SANDBOX or LIVE
+    $config['mode'] = ($config['Sandbox']) ? 'SANDBOX' : 'LIVE';
+    $paypal_rest->setConfig(array('mode' => $config['mode']));
+
     // Add to header
     $paypal_rest->addRequestHeader('PayPal-Partner-Attribution-Id', 'AngellEYE_SP_POS_VT');
 
