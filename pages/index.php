@@ -4,6 +4,19 @@
  */
 require_once('../includes/config.php');
 
+/**
+ * Check transaction log directory and file is writable
+ */
+$logFilePathError = false;
+if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
+{
+    $file = $config['LogFilePath'];
+    $file_directory = dirname($file);
+    if(!is_writable($file_directory) || !is_writable($file))
+    {
+        $logFilePathError = true;
+    }
+}
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
@@ -140,7 +153,11 @@ require_once('../includes/config.php');
                         <div class="alert alert-info" id="pos-intro-alert-msg">
                             <p>To submit a new transaction enter the payment details below, then click the process payment button.</p>
                         </div>
-
+                        <?php if($logFilePathError) { ?>
+                        <div class="alert alert-danger">
+                            <p>Configuration Issue: Logging is enabled in the config, but the directory/filename you have set is not writable. Set correct permissions for the log directory/filename or disable logging in the config to disable this message. Config is located in /includes/config.php.</p>
+                        </div>
+                        <?php } ?>
                         <!-- POS form -->
                         <form class="form-horizontal" id="ae-paypal-pos-form" name="ae-paypal-pos-form" data-currency-sign="<?php echo (isset($config['CurrencySign'])) ? $config['CurrencySign'] : '$'; ?>" role="form" method="POST" action="../bin/process.php" autocomplete="off">
 

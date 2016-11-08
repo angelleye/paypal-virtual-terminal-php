@@ -170,7 +170,7 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
     $_SESSION['DPResult'] = $paypal->DoDirectPayment($DPData);
 
     // Write to transaction log
-    if(isset($config['LogEnabled']) && $config['LogEnabled'])
+    if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
     {
         logTransaction($_SESSION['DPResult'], $config['LogFilePath']);
     }
@@ -426,7 +426,7 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     $_SESSION['PayPayResult'] = $paypal->ProcessTransaction($PayPalRequestData);
 
     // Write to transaction log
-    if(isset($config['LogEnabled']) && $config['LogEnabled'])
+    if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
     {
         logTransaction($_SESSION['PayPayResult'], $config['LogFilePath']);
     }
@@ -720,7 +720,7 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         $PayPalErrors = json_decode($ex->getData());
 
         // Write to transaction log
-        if(isset($config['LogEnabled']) && $config['LogEnabled'])
+        if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
         {
             $log_array = (array) $PayPalErrors;
             logTransaction($log_array, $config['LogFilePath']);
@@ -847,7 +847,7 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
     }
 
     // Write to transaction log
-    if(isset($config['LogEnabled']) && $config['LogEnabled'])
+    if(isset($config['LogEnabled']) && $config['LogEnabled'] && !empty($config['LogFilePath']))
     {
         logTransaction($payment, $config['LogFilePath']);
     }
@@ -865,8 +865,34 @@ else
 function logTransaction($data = array(), $file = ''){
     if(!empty($data) && $file != '')
     {
-        // Append to log file
-        file_put_contents($file, print_r($data, true) . "\n\n", FILE_APPEND);
+        if(isLogFileWritable($file))
+        {
+            // Append to log file
+            if(!file_put_contents($file, print_r($data, true) . "\n\n", FILE_APPEND))
+            {
+                return false;
+            }
+        } else {
+            return false;
+        }
+        return true;
+    }
+}
+
+/**
+ * @param $file
+ * @return bool
+ * Check transaction log directory and file is writable
+ */
+function isLogFileWritable($file){
+    if(!empty($file))
+    {
+        $file_directory = dirname($file);
+        if(!is_writable($file_directory) || !is_writable($file))
+        {
+            return false;
+        }
+        return true;
     }
 }
 
