@@ -18,6 +18,9 @@ if(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) == 'pa
     $paypal_config = array('Sandbox' => $config['Sandbox'], 'APIUsername' => $config['APIUsername'], 'APIPassword' => $config['APIPassword'], 'APISignature' => $config['APISignature']);
     $paypal = new \angelleye\PayPal\PayPal($paypal_config);
 
+    // Include APIButtonSource
+    $paypal->APIButtonSource = 'AngellEYE_SP_POS_VT';
+
     ############[ SESSIONS ]################
     $_SESSION['invoice'] = isset($_POST['InvoiceID']) ? $_POST['InvoiceID'] : '';
     $_SESSION['notes'] = isset($_POST['Notes']) ? $_POST['Notes'] : '';
@@ -298,6 +301,8 @@ elseif(isset($config['ApiSelection']) && (strtolower($config['ApiSelection']) ==
         'APIPartner' => $config['PayFlowPartner']
     );
     $paypal = new \angelleye\PayPal\PayFlow($paypal_config);
+    // Include APIButtonSource
+    $paypal->APIButtonSource = 'AngellEYE_SP_POS_VT';
 
     ############[ SESSIONS ]################
     $_SESSION['invoice'] = isset($_POST['InvoiceID']) ? $_POST['InvoiceID'] : '';
